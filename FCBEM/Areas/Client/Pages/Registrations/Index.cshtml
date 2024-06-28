@@ -1,0 +1,69 @@
+﻿@page "{PageNumber?}"
+@using System.Globalization
+@model FCBEM.Areas.Client.Pages.Registrations.IndexModel
+@{
+    ViewData["Title"] = "My Registraions";
+    var pagingModel = new FCBEM24.Helpers.PagingModel()
+            {
+                PageNumber = Model.PageNumber,
+                CountPages = Model.CountPages,
+                GenerateUrl = (int? p) => $"/{Model.ProjectName}{Model.ProjectYear}/Client/Registrations/" + p.ToString()
+            };
+    ViewData["Title"] = "My Registraion";
+}
+
+<h1>My Registration</h1>
+
+@await Component.InvokeAsync("StatusMessage", new { message = Model.StatusMessage })
+
+@if (Model.ListData.Count == 0)
+{
+    <div class="no-infor">
+    <h4>There are currently no activities</h4>
+</div>
+}
+else
+{
+    <partial name="_Paging" model="@pagingModel" />
+    <div class="row">
+    <div class="col-md-12 mb-3">
+        <table class="table table-striped">
+            <thead>
+                <tr class="bg-success">
+                    <th style="font-size: 12px;font-weight: 600; width: 200px;" class="text-center" scope="col">Code
+                    </th>
+                    <th style="font-size: 12px;font-weight: 600; width: 200px;" class="text-center" scope="col">Paper ID
+                    </th>
+                    <th style="font-size: 12px;font-weight: 600; width: 120px;" class="text-center" scope="col">
+                        Registration Type</th>
+                    <th style="font-size: 12px;font-weight: 600; width: 100px;" class="text-center" scope="col">Total
+                    </th>
+                    <th style="font-size: 12px;font-weight: 600" class="text-center" scope="col">Bill To</th>
+                    <th style="font-size: 12px;font-weight: 600; width: 70px;" class="text-center" scope="col">Status
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.ListData)
+                    {
+                        <tr>
+                            <td style="text-align: justify;">@(item.RegistrationIdText ?? string.Empty)</td>
+                            <td style="text-align: justify;">@(item.Paper?.PaperIDText ?? string.Empty)</td>
+                            <td style="text-align: justify;">
+                                <strong>@Enum.GetName(typeof(Core.Commons.FCBEMConstants.RegistrationType),
+                                         item.RegistrationType)</strong>
+                            </td>
+                            <td style="text-align: justify;">@item.Total</td>
+                            <td style="text-align: justify;">@item.BillTo - @item.AnyRemark</td>
+                            <td style="text-align: justify;">
+                                <strong>@Enum.GetName(typeof(Core.Commons.FCBEMConstants.PaperStatus), item.Status)</strong>
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <partial name="_Paging" model="@pagingModel" />
+}

@@ -1,0 +1,87 @@
+﻿@page "{PageNumber?}"
+@using System.Globalization;
+@using static Core.Commons.FCBEMConstants
+@model FCBEM24.Areas.Client.Pages.Papers.IndexModel
+@{
+    ViewData["Title"] = "My Submission";
+    var pagingModel = new FCBEM24.Helpers.PagingModel()
+            {
+                PageNumber = Model.PageNumber,
+                CountPages = Model.CountPages,
+                GenerateUrl = (int? p) => $"/{Model.ProjectName}{Model.ProjectYear}/Client/Papers/" + p.ToString()
+            };
+}
+<h1>My Paper</h1>
+
+@await Component.InvokeAsync("StatusMessage", new { message = Model.StatusMessage })
+
+@if (Model.ListData.Count == 0)
+{
+    <div class="no-infor">
+        <h4>There are currently no activities</h4>
+    </div>
+}
+else
+{
+    <partial name="_Paging" model="@pagingModel" />
+    <div class="row">
+    <div class="col-md-12 mb-3">
+        <table class="table table-striped">
+            <thead> 
+                    <tr class="bg-success">
+                        <th style="font-size: 12px;font-weight: 600; width: 90px;" class="text-center" scope="col">Paper ID</th>
+                        <th style="font-size: 12px;font-weight: 600;" class="text-center" scope="col">Title</th>
+                        <th style="font-size: 12px;font-weight: 600; width: 80px;" class="text-center" scope="col">Submission Type</th>
+                        <th style="font-size: 12px;font-weight: 600; width: 120px;" class="text-center" scope="col">File</th>
+                        <th style="font-size: 12px;font-weight: 600; width: 60px;" class="text-center" scope="col">Status</th>
+                        <th style="font-size: 12px;font-weight: 600" class="text-center" scope="col">Submit<br/> Full Paper</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.ListData)
+                {
+                    <tr>
+                            <td style="text-align: justify;">@item.PaperIDText</td>
+                            <td style="text-align: justify;">@item.ManuscriptTitle</td>
+
+                            @if (item.Submission == SubmissionType.FullPaper)
+                            {
+                                <td> Full Paper (Presentation and Possible Publication) </td>
+                            }
+                            else if (item.Submission == SubmissionType.AbstractPO)
+                            {
+                                <td> Abstract (Presentation Only) </td>
+                            }
+                            else if (item.Submission == SubmissionType.AbstractPAPP)
+                            {
+                                <td> Abstract (Presentation and Possible Publication) </td>
+                            }
+                            <td style="text-align: justify;"><a href="~/@item.File">@item.ManuscriptTitle (file)</a></td>
+                        <td style="white-space: nowrap;">
+                            @if (item.Status == Core.Commons.FCBEMConstants.PaperStatus.Reject)
+                            {
+                                <strong style="color: red;">Reject</strong>
+                            }
+                            else if (item.Status == Core.Commons.FCBEMConstants.PaperStatus.Accepted)
+                            {
+                                    <strong style="color: green;">Accepted</strong>
+                            }
+                            else
+                            {
+                                    <strong>@Enum.GetName(typeof(Core.Commons.FCBEMConstants.PaperStatus), item.Status)</strong>
+                             }
+                            </td>
+                            <td>
+                                @if (item.Submission == SubmissionType.AbstractPAPP && item.Status == Core.Commons.FCBEMConstants.PaperStatus.Accepted)
+                                {
+                                    <a class="btn btn-primary" asp-page="./Update" asp-route-Id="@item.Id" title="Submit Full Paper">↟</a>
+                                }
+                            </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    </div>
+    <partial name="_Paging" model="@pagingModel" />
+}

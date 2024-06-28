@@ -1,0 +1,44 @@
+﻿@using FCBEMModel.PaperModels
+
+@model IList<PaperNew>
+
+<style>
+    .list-group {
+        margin-bottom: 20px;
+        padding-left: 0px !important;
+    }
+
+    .list-group-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 6px;
+        border: none;
+    }
+
+    .thumbarticle-center {
+        height: unset;
+        margin-right: 10px;
+    }
+
+    .fe-title-color {
+        margin-bottom: 0;
+    }
+</style>
+
+@if (Model.Count() > 0)
+{
+    <!-- Adjust the column size as needed -->
+    <ul class="list-group" style="margin-bottom: 20px !important;">
+        @foreach (var a in Model)
+        {
+            <li class="list-group-item">
+                <div class="media-body">
+                    <p class="media-heading fe-title-color">
+                        <a style="font-size: 13px" class="pull-left" href="/FCLE/News/@a.Slug">@a.Title</a>
+                    </p>
+                </div>
+            </li>
+        }
+    </ul>
+
+}

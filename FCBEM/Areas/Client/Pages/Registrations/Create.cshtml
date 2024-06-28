@@ -1,0 +1,298 @@
+﻿@page
+@model FCBEM.Areas.Client.Pages.Registrations.CreateModel
+@{
+    ViewData["Title"] = "New Registration";
+}
+@await Component.InvokeAsync("StatusMessage", new { message = Model.StatusMessage })
+<style>
+    .row {
+        margin-right: unset;
+        margin-left: unset;
+        margin-top: 10px;
+        font-size: 14px;
+        font-weight: normal;
+    }
+
+    .col-md-6 {
+        padding-right: 5px;
+        padding-left: 5px;
+        align-content: center;
+    }
+
+    #author1 > .col-md-6 > .form-control {
+        width: 50px
+    }
+</style>
+<div style="display: flex; justify-content: flex-start; flex-wrap: nowrap;">
+    @if (Model.Expired.CompareTo(DateTime.Now) >= 0)
+    {
+        <p>Extended deadline for New Registration: December 7th, 2023</p>
+    }
+    else
+    {
+        <div class="row">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">Registration Information</h4>
+                        </div>
+                        <div class="panel-body">
+                            <form method="post" asp-antiforgery="true" enctype="multipart/form-data">
+                                <div id="show_item">
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                    <h4 class="panel-title">Information</h4>
+                                                </div>
+                                                <div class="panel-body">
+                                                    <div class="row">
+                                                        <div class="col-md-4 mb-4">
+                                                            <label>First Name:*</label>
+                                                            <input class="form-control" asp-for="Input.FirstName" required>
+                                                        </div>
+                                                        <div class="col-md-4 mb-4">
+                                                            <label>Middle Name:</label>
+                                                            <input class="form-control" asp-for="Input.MiddleName">
+                                                        </div>
+                                                        <div class="col-md-4 mb-4">
+                                                            <label>Last Name:*</label>
+                                                            <input class="form-control" asp-for="Input.LastName" required>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-3 mb-3">
+                                                            <label>Position:</label>
+                                                            <select asp-for="Input.Position" class="form-control" asp-items="Model.Positions"></select>
+                                                        </div>
+                                                        <div class="col-md-3 mb-3">
+                                                            <label>Student ID:</label>
+                                                            <input class="form-control" asp-for="Input.StudentId">
+                                                        </div>
+                                                        <div class="col-md-3 mb-3">
+                                                            <label>Affilication:*</label>
+                                                            <input class="form-control" asp-for="Input.Affilication" required>
+                                                        </div>
+                                                        <div class="col-md-3 mb-3">
+                                                            <label>Country Or Region:*</label>
+                                                            <input class="form-control" asp-for="Input.CountryOrRegion" required>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-6 mb-6">
+                                                            <label>Email:*</label>
+                                                            <input class="form-control" asp-for="Input.Email" required>
+                                                        </div>
+                                                        <div class="col-md-6 mb-6">
+                                                            <label>Telephone Number:*</label>
+                                                            <input class="form-control" asp-for="Input.TelephoneNumber" required>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-6 mb-6">
+                                                            <label>Registration Type:*</label>
+                                                            <select asp-for="Input.RegistrationType" class="form-control" asp-items="Model.RegistrationTypes"></select>
+                                                        </div>
+                                                        <div class="col-md-6 mb-6">
+                                                            </div>
+                                                    </div>
+                                                    <div class="row" id="author3">
+                                                        <div class="col-md-6 mb-6">
+                                                            <label>Paper:*</label>
+                                                            <select asp-for="Input.PaperId" class="form-control" asp-items="Model.Papers">
+                                                                <option></option>
+                                                            </select>
+                                                            <span asp-validation-for="Input.PaperId" class="text-danger"></span>
+                                                        </div>
+                                                        <div class="col-md-6 mb-6">
+                                                            <label>Presentation Type:*</label>
+                                                            <select asp-for="Input.PresentationType" class="form-control" asp-items="Model.PresentationTypes"></select>
+                                                            <span asp-validation-for="Input.PresentationType" class="text-danger"></span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-6 mb-6">
+                                                            <label>Add Payment Proof:*</label>
+                                                            <input asp-for="Input.FormFile" class="form-control" accept=".pdf, .png, .jpg, .jpeg" required>
+                                                        </div>
+                                                        <div class="col-md-6 mb-6">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                    <h4 class="panel-title">Registration Fee</h4>
+                                                    <span>(Payment in VND is applied for Domestic attendees and international attendees who are residing in Vietnam)</span>
+                                                </div>
+                                                <div class="panel-body">
+                                                    <div id="author1" class="row">
+                                                        <div class="col-md-6 mb-6">
+                                                            <div class="row">
+                                                                <div class="col-md-6 mb-6">
+                                                                    <label>Regular: 5,000,000 VND</label>
+                                                                </div>
+                                                                <div class="col-md-6 mb-6">
+                                                                    <input class="form-control" asp-for="Input.AuthorRegular5VND">
+                                                                </div>
+                                                            </div>
+                                                            <span asp-validation-for="Input.AuthorRegular5VND" class="text-danger"></span>
+                                                        </div>
+                                                        <div class="col-md-6 mb-6">
+                                                            <div class="row">
+                                                                <div class="col-md-6 mb-6">
+                                                                    <label>Regular: 300 USD</label>
+                                                                </div>
+                                                                <div class="col-md-6 mb-6">
+                                                                    <input class="form-control" asp-for="Input.AuthorRegular3USD">
+                                                                </div>
+                                                            </div>
+                                                            <span asp-validation-for="Input.AuthorRegular3USD" class="text-danger"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div id="author2" class="row">
+                                                        <div class="col-md-6 mb-6">
+                                                            <div class="row">
+                                                                <div class="col-md-6 mb-6">
+                                                                    <label>Student: 4,500,000 VND</label>
+                                                                </div>
+                                                                <div class="col-md-6 mb-6">
+                                                                    <input class="form-control" asp-for="Input.AuthorRegular45VND">
+                                                                </div>
+                                                            </div>
+                                                            <span asp-validation-for="Input.AuthorRegular45VND" class="text-danger"></span>
+                                                        </div>
+                                                        <div class="col-md-6 mb-6">
+                                                            <div class="row">
+                                                                <div class="col-md-6 mb-6">
+                                                                    <label>Student: 250 USD</label>
+                                                                </div>
+                                                                <div class="col-md-6 mb-6">
+                                                                    <input class="form-control" asp-for="Input.AuthorRegular25USD">
+                                                                </div>
+                                                            </div>
+                                                            <span asp-validation-for="Input.AuthorRegular25USD" class="text-danger"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div id="listener" class="row">
+                                                        <div class="col-md-6 mb-6">
+                                                            <div class="row">
+                                                                <div class="col-md-6 mb-6">
+                                                                    <label>Listener: 1,000,000 VND</label>
+                                                                </div>
+                                                                <div class="col-md-6 mb-6">
+                                                                    <input class="form-control" asp-for="Input.Listener1VND">
+                                                                </div>
+                                                            </div>
+                                                            <span asp-validation-for="Input.Listener1VND" class="text-danger"></span>
+                                                        </div>
+                                                        <div class="col-md-6 mb-6">
+                                                            <div class="row">
+                                                                <div class="col-md-6 mb-6">
+                                                                    <label>Listener: 100 USD</label>
+                                                                </div>
+                                                                <div class="col-md-6 mb-6">
+                                                                    <input class="form-control" asp-for="Input.Listener1USD">
+                                                                </div>
+                                                            </div>
+                                                            <span asp-validation-for="Input.Listener1USD" class="text-danger"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                    <h4 class="panel-title">Official Invoice</h4>
+                                                </div>
+                                                <div class="panel-body">
+                                                    <div class="row">
+                                                        <label>Bill To:*</label>
+                                                        <input class="form-control" asp-for="Input.BillTo" required>
+
+                                                    </div>
+                                                    <div class="row">
+                                                        <label>Any Remark:</label>
+                                                        <textarea class="form-control" asp-for="Input.AnyRemark"></textarea>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                    <h4 class="panel-title">Diet</h4>
+                                                </div>
+                                                <div class="panel-body">
+                                                    <div class="row">
+                                                        <label>Diet:</label>
+                                                        <select asp-for="Input.Diet" class="form-control" asp-items="Model.DietTypes" required></select>
+
+                                                    </div>
+                                                    <div class="row">
+                                                        <label>Comment:</label>
+                                                        <textarea class="form-control" asp-for="Input.DietComment"></textarea>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12 mb-3">
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            $(document).ready(function () {
+                registrationTypeChange($("select[name='Input.RegistrationType']").val());
+                $("select[name='Input.RegistrationType'").on('change', function (e) {
+                    registrationTypeChange(this.value);
+                });
+            });
+
+            function registrationTypeChange(value) {
+                if (value === "Author") {
+                    $("#author1").show();
+                    $("#author2").show();
+                    $("#author3").show();
+                    $("#presentationType").show();
+                    $("#listener").hide();
+                } else {
+                    $("#author1").hide();
+                    $("#author2").hide();
+                    $("#author3").hide();
+                    $("#presentationType").hide();
+                    $("#listener").show();
+                }
+            }
+        </script>
+    }
+</div>

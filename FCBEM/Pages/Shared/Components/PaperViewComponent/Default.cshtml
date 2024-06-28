@@ -1,0 +1,60 @@
+﻿@model FCBEM24.ViewComponents.PaperViewComponent.PaperViewModel
+
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="form-group">
+            <div class="col-md-10" style="width: 100%;">
+                <input asp-for="Input.Title" class="form-control" onkeyup="ChangeToSlug('Title','Slug');">
+                <span asp-validation-for="Input.Title" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+@* <div class="row">
+                <h5 class="control-label col-md-2">Liên kết nhanh</h5>
+                </div>
+                <div class="form-group">
+                <h5 class="control-label col-md-4">@baseHref</h5>
+                <div class="col-md-8">
+                <input asp-for="Input.Slug" class="form-control">
+                <span asp-validation-for="Input.Slug" class="text-danger"></span>
+                </div>
+                </div>*@
+
+<div class="form-group">
+    <div class="col-md-12">
+        <textarea rows="2" cols="20" asp-for="Input.Abstract" class="form-control" style="height: 120px;"></textarea>
+        <span asp-validation-for="Input.Abstract" class="text-danger"></span>
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="col-md-10" style="width: 100%;">
+        <textarea rows="2" cols="20" asp-for="Input.Content" class="ckeditor"></textarea>
+        <span asp-validation-for="Input.Content" class="text-danger"></span>
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="col-md-8">
+        <h5>Ảnh nhỏ (tối đa 460x290 pixel):</h5>
+        <input asp-for="FileUpload" class="form-control">
+        <p>hoặc</p>
+        <input asp-for="Input.ThumbImage" class="form-control" placeholder="Dán link ảnh vào đây" onkeyup="PreviewImage('Input_ThumbImage');">
+        <span asp-validation-for="Input.ThumbImage" class="text-danger"></span>
+    </div>
+    <div class="col-md-4">
+        @*<input type='file' id="inputFile" name="uploadPreview" />*@
+        <img id="image_upload_preview" width="218" height="150" src="~/images/placeholder-218x150.png" onerror="this.src='/images/no_thumb_article.webp'" alt="uploadpreviewimage" />
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        PreviewImage('Input_ThumbImage');
+    });
+</script>

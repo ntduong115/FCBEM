@@ -1,0 +1,105 @@
+﻿@page "/Admin/News"
+@model FCBEM24.Areas.Admin.Pages.News.IndexModel
+
+@{
+    ViewData["Title"] = "News";
+
+}
+<link href="~/css/form/read.css" rel="stylesheet" />
+
+@await Component.InvokeAsync("StatusMessage", new { message = Model.StatusMessage })
+<h2 style="margin-top:10px;">Trang Quản lý - Tin tức</h2>
+<p>
+    <a class="btn btn-secondary" asp-page="./Create">Create News</a>
+</p>
+<form>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="Title">
+                    Tiêu đề
+                </label>
+                <input asp-for="Input.Title" class="form-control" style="max-width: 100%;">
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="Status">
+                    Trạng thái
+                </label>
+                <select asp-for="Input.Status" class="form-control" asp-items="Html.GetEnumSelectList<Core.Commons.FCBEMConstants.ArticleStatus>()">
+                    <option>"Combobox_All"</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="AuthorId">
+                    Tác giả
+                </label>
+                <select asp-for="Input.UserId" asp-items="Model.AuthorId" class="form-control"></select>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-bottom:10px">
+        <div class="col-md-6 col-sm-6 text-left">
+            <div style="margin-top: 5px; margin-bottom: 5px; position: absolute">
+                <span>Tìm thấy</span>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-6 text-right">
+            <input type="submit" value="Tìm kiếm" class="btn btn-primary" style="max-width: 100%;">
+        </div>
+    </div>
+</form>
+
+@if (Model.ListData.Count == 0)
+{
+    <div class="no-infor">
+        <h4>"NoInformation"</h4>
+    </div>
+}
+else
+{
+
+    <table class="table table-hover">
+        <thead>
+            <tr class="bg-success">
+                <th class="text-center" scope="col">Id</th>
+                <th class="text-center" scope="col">Tiêu đề</th>
+                <th class="text-center" scope="col"><label asp-for="Input.ViewCount"></label></th>
+                <th class="text-center" scope="col"></th>
+            </tr>
+        </thead>
+        <form method="post">
+        <tbody>
+
+            @foreach (var news in Model.ListData)
+            {
+                <tr>
+                    <th scope="row">@news.Id</th>
+                    <td>@news.Title</td>
+
+                    <td>@news.ViewCount</td>
+
+                    <td>
+                        <a class="btn btn-secondary" asp-page="./Edit" asp-route-id="@news.Id">Update</a>
+
+                        <button class="btn btn-secondary" type="submit" asp-page-handler="Delete" asp-route-id="@news.Id" asp-route-ThumbImage="@news.ThumbImage" onclick="return confirmDelete();">Delete</button>
+
+                    </td>
+                    <script>function confirmDelete() {
+                            return confirm("Are you sure you want to delete?");
+                        }</script>
+                </tr>
+            }
+        </tbody>
+        </form>
+    </table>
+
+}
+
+@*<form method="post">
+        <button type="submit" asp-page-handler="Replace">replace</button>
+    </form>*@

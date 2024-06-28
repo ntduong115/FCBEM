@@ -1,0 +1,10 @@
+﻿@page
+@model FCBEM24.Areas.Admin.Pages.Manager.ToolModel
+@{
+}
+
+<form method="post" autocomplete="off" asp-antiforgery="true">
+
+    <button type="submit" title="Generate" class="btn btn-secondary" asp-page-handler="Generate">Khởi tạo ban đầu</button>
+    <button type="submit" title="Generate" class="btn btn-secondary" asp-page-handler="Reset">Reset năm mới</button>
+</form>

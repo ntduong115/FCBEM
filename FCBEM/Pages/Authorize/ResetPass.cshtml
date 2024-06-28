@@ -1,0 +1,39 @@
+﻿@page "/ResetPassword"
+@model FCBEM24.Pages.Authorize.ResetPassModel
+@{
+    Layout = "_Layout_Auth";
+}
+
+@await Component.InvokeAsync("StatusMessage", new { message = Model.StatusMessage })
+
+<form method="post">
+    <span asp-validation-for="Input.Password"></span>
+    <div class="input-group mb-2 row">
+        <div class="col-md-5">
+            <label class="required" asp-for="Input.Password"></label>
+        </div>
+        <div class="col-md-6" style="text-align:right">
+            <input asp-for="Input.Password" class="form-control" autofocus="autofocus" autocomplete="off" />
+        </div>
+    </div>
+
+    <span asp-validation-for="Input.ConfirmPassword"></span>
+    <div class="input-group mb-2 row">
+        <div class="col-md-5">
+            <label class="required" asp-for="Input.ConfirmPassword"></label>
+        </div>
+        <div class="col-md-6" style="text-align:right">
+            <input asp-for="Input.ConfirmPassword" class="form-control" autofocus="autofocus" autocomplete="off" />
+            
+        </div>
+    </div>
+   
+    <input asp-for="Input.Mail" class="form-control" autofocus="autofocus" autocomplete="off" hidden />
+    <input asp-for="Token" class="form-control" autofocus="autofocus" autocomplete="off" hidden />
+    <input style="width: 20%" type="submit" value="Confirm" class="btn btn-block btn-primary" />
+
+    <input asp-for="Input.Mail" class="form-control" autocomplete="off" hidden />
+    <span asp-validation-for="Input.Mail"></span>
+
+   
+</form>

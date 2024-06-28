@@ -1,0 +1,96 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<AssemblyVersion>1.0.*</AssemblyVersion>
+		<GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+		<Deterministic>false</Deterministic>
+	</PropertyGroup>
+
+	<PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
+	<PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
+	<ItemGroup>
+		<Compile Remove="Areas\Admin\Pages\Abstracts\**" />
+		<Compile Remove="Areas\Admin\Pages\FullPapers\**" />
+		<Content Remove="Areas\Admin\Pages\Abstracts\**" />
+		<Content Remove="Areas\Admin\Pages\FullPapers\**" />
+		<EmbeddedResource Remove="Areas\Admin\Pages\Abstracts\**" />
+		<EmbeddedResource Remove="Areas\Admin\Pages\FullPapers\**" />
+		<None Remove="Areas\Admin\Pages\Abstracts\**" />
+		<None Remove="Areas\Admin\Pages\FullPapers\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Remove="Areas\" />
+		<None Remove="Areas\Admin\" />
+		<None Remove="Areas\Client\" />
+		<None Remove="Areas\Admin\Pages\News\" />
+		<None Remove="Commons\" />
+		<None Remove="Commons\Authorizations\" />
+		<None Remove="Commons\PageModels\" />
+		<None Remove="ViewComponents\" />
+		<None Remove="Commons\Validations\" />
+		<None Remove="ViewComponents\PaperNewFCBEM\" />
+		<None Remove="DataAccess\" />
+		<None Remove="Areas\Admin\Pages\Authors\" />
+		<None Remove="Areas\Admin\Pages\Abstracts\" />
+		<None Remove="Areas\Admin\Pages\FullPapers\" />
+		<None Remove="Helpers\" />
+		<None Remove="BusinessLogic\" />
+	</ItemGroup>
+	<ItemGroup>
+		<Folder Include="Areas\Admin\Pages\News\" />
+		<Folder Include="Commons\Authorizations\" />
+		<Folder Include="Commons\Validations\" />
+		<Folder Include="DataAccess\" />
+		<Folder Include="Areas\Admin\Pages\Authors\" />
+		<Folder Include="Helpers\" />
+		<Folder Include="BusinessLogic\" />
+		<Folder Include="wwwroot\docs\" />
+		<Folder Include="wwwroot\fonts\" />
+		<Folder Include="wwwroot\img\" />
+		<Folder Include="wwwroot\Resources\Temp\" />
+		<Folder Include="wwwroot\Resources\Uploads\NEWS_Thumb\" />
+		<Folder Include="wwwroot\Resources\Uploads\NEWS\" />
+		<Folder Include="wwwroot\Resources\Uploads\Papers\" />
+		<Folder Include="wwwroot\Resources\Uploads\Registrations\" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="MailKit" Version="4.4.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="8.0.4" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.4" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="8.0.4" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<PackageReference Include="EPPlus" Version="7.1.1" />
+		<PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.4" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.4" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.4">
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.4" />
+	</ItemGroup>
+	<ItemGroup>
+		<Content Remove="wwwroot\docs\" />
+		<Content Remove="wwwroot\fonts\" />
+		<Content Remove="wwwroot\img\" />
+		<Content Remove="wwwroot\css\" />
+		<Content Remove="wwwroot\js\" />
+	</ItemGroup>
+	<ItemGroup>
+		<_ContentIncludedByDefault Remove="wwwroot\css\fcle.css" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Core\Core.csproj" />
+		<ProjectReference Include="..\FCBEMModel\FCBEMModel.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<Content Update="wwwroot\css\site.css">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+		</Content>
+	</ItemGroup>
+</Project>

@@ -1,0 +1,155 @@
+﻿@model FCBEM24.ViewComponents.PaperAdjustViewComponent.PaperAdjustModel
+
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            <strong>Tinh chỉnh</strong>
+        </h3>
+    </div>
+    <div class="panel-body">
+        
+
+        <div class="form-group">
+            <h5 class="col-md-4">T.giả</h5>
+            <div class="col-md-8">
+                <select asp-for="Input.UserId" asp-items="Model.AuthorId" class="form-control"></select>
+                <span asp-validation-for="Input.UserId" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <h5 class="col-md-4">Lượt xem</h5>
+            <div class="col-md-8">
+                <input asp-for="Input.ViewCount" class="form-control">
+                <span asp-validation-for="Input.ViewCount" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <h5 class="col-md-4">Trạng thái</h5>
+            <div class="col-md-8">
+                <select asp-for="Input.Status" class="form-control" asp-items="Html.GetEnumSelectList<Core.Commons.FCBEMConstants.ArticleStatus>()"></select>
+                <span asp-validation-for="Input.Status" class="text-danger"></span>
+            </div>
+        </div>
+
+
+        @*<div class="form-group">
+        <div class="col-md-10">
+        <div class="checkbox">
+        <input data-val="true" class="styled" data-val-required="The IsEmagazine field is required." id="IsEmagazine" name="IsEmagazine" type="checkbox" value="true" />
+        <label for="IsEmagazine">Là Emagazine</label>
+        </div>
+        </div>
+        </div>*@
+
+
+
+        <div class="form-group">
+            @*<h5 class="col-md-10" style="text-align: left">Ngày tạo (mở rộng):</h5>*@
+        </div>
+        <div class="form-group">
+
+            <div class="col-md-12">
+                <input type="hidden" asp-for="Input.UpdatedDate" class="form-control">
+                <span asp-validation-for="Input.UpdatedDate" class="text-danger"></span>
+            </div>
+        </div>
+  @*      @if (Model.IsEdit)
+        {
+            
+            <span>** Chỉ nên chọn ít hơn 10 Hashtag</span>
+
+            
+
+            <script>
+                @*function chooseTag() {
+                wLeft = window.screenLeft ? window.screenLeft : window.screenX;
+                wTop = window.screenTop ? window.screenTop : window.screenY;
+                //center window
+                var left = wLeft + (window.innerWidth / 2) - (640 / 2);
+                var top = wTop + (window.innerHeight / 2) - (480 / 2);
+                var popup = window.open('@Url.Page("ChooseTag")', 'popUpChooseTags', 'resizable=0,width=640px,height=480px,top=' + top + ', left=' + left);
+
+                }
+                function appendTag(name) {
+                console.log('Selected Tag: ' + name);
+                var tag = $('#Input_Tags')
+                var text = tag.val();
+                if (text !== '' && text !== null) {
+                text += ', ';
+                }
+                text += name;
+                tag.val(text);
+                }*@
+
+                 @*   function chooseTag() {
+                        console.log('open');
+                        wLeft = window.screenLeft ? window.screenLeft : window.screenX;
+                        wTop = window.screenTop ? window.screenTop : window.screenY;
+                        //center window
+                        var left = wLeft + (window.innerWidth / 2) - (640 / 2);
+                        var top = wTop + (window.innerHeight / 2) - (480 / 2);
+                        var popup = window.open('@Url.Page("../Tags/Create")', 'popUpChooseTags', 'resizable=0,width=640px,height=480px,top=' + top + ', left=' + left);
+                        var timer = setInterval(function () {
+                            if (popup.closed) {
+                                clearInterval(timer);
+                                reloadSelectTags();
+
+                            }
+                        }, 500);
+                    }
+                function reloadSelectTags() {
+                    $.ajax({
+                        url: '@Url.Action("GetTags", "Articles")',
+                        dataType: 'json',
+                        type: 'GET',
+                        data: {}
+                    }).done(function (data) {
+                        console.log(data);
+                        $('#Input_Tags').empty();
+                        $.each(data, function (index, item) {
+                            $('#Input_Tags').append('<option value="' + item.id + '">' + item.name + '</option>');
+                        });
+                        MultiselectDropdownReload('Input_Tags');
+                    }).fail(function (ketqua) {
+
+                    });
+                }
+            </script>*@
+        
+        <div class="form-group text-center" hidden>
+            <div class="col-md-12">
+                <input type="button" class="btn btn-block" id="btnpopup" value="Thêm tin liên quan" onclick="showChooseRelated();" />
+            </div>
+            <div class="col-md-12" style="margin-top:10px">
+                <input type="button" class="btn btn-block" id="btnpopup" value="Thêm tin cùng sự kiện" onclick="showChooseRelated();" />
+            </div>
+        </div>
+
+    </div>
+
+    <div class="panel-footer">
+        <div class="row">
+            <!--
+            <div class="col-md-6 text-center">
+                <button type="button" class="btn btn-success btn-block">
+                    Xem trước
+                </button>
+            </div>
+            -->
+            <div class="col-md-12 text-center">
+              
+              
+                    <input type="submit" value="Post" class="btn btn-primary btn-block" style="max-width: 100%;">
+
+
+            
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+

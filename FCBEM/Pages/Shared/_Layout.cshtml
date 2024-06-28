@@ -1,0 +1,284 @@
+﻿@{
+    var eventList = ViewBag.EventList ?? new List<int>();
+    string text = $"{Model.ProjectName.ToLower()}{Model.ProjectYear}";
+}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xml:lang="en"
+      lang="en">
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+          content="Chính thức thành lập ngày 8/9/2006 theo Quyết định của Thủ tướng Chính phủ, Trường Đại học FPT trở thành trường đại học đầu tiên của Việt Nam do một doanh nghiệp đứng ra thành lập với 100% vốn đầu tư từ Tập đoàn FPT. Sự khác biệt của Trường Đại học FPT so với các trường đại học khác là đào tạo theo hình thức liên kết chặt chẽ với các doanh nghiệp, gắn đào tạo với thực tiễn, với nghiên cứu – triển khai và các công nghệ hiện đại nhất. Triết lý và phương pháp giáo dục hiện đại; Đào tạo con người toàn diện, hài hòa; Chương trình luôn được cập nhật và tuân thủ các chuẩn công nghệ quốc tế; Đặc biệt chú trọng kỹ năng ngoại ngữ; Tăng cường đào tạo quy trình tổ chức sản xuất, kỹ năng làm việc theo nhóm và các kỹ năng cá nhân khác là những điểm sẽ đảm bảo cho sinh viên tốt nghiệp có những cơ hội việc làm tốt nhất sau khi ra trường">
+    @RenderSection("Meta", required: false)
+    <title>@ViewData["Title"] - FPT Education</title>
+
+    <script src="~/js/jquery-1.12.4.js"></script>
+    <script src="~/js/modernizr-2.6.2.js"></script>
+    <script src="https://cdn.rawgit.com/leafo/sticky-kit/v1.1.2/jquery.sticky-kit.js" async></script>
+
+    <link rel="canonical" href="https://netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+    </noscript>
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/site.css" rel="stylesheet" />
+    <link href="~/css/fcle.css" rel="stylesheet" />
+    @RenderSection("styles", required: false)
+
+    <style>
+        .title {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <partial name="_Header" />
+
+    <!-- slide -->
+    <div class="banner_block" id="banner_home">
+        <img src="~/img/poster1.png" alt srcset>
+    </div>
+    <!-- endslide  -->
+
+
+    <div class="container_home">
+        <div class="block_left">
+            @RenderBody()
+        </div>
+
+        <div class="block_right">
+
+            <div class="region region-homepagemessage-right">
+                <div class="views-element-container block block-views block-views-blocklatest-news-block-1"
+                     id="block-icfe2022-views-block-latest-news-block-1">
+
+                    <h2 class="title">Latest News</h2>
+                    @await Component.InvokeAsync("MostViewPaper")
+                    <style>
+                        .list-group {
+                            margin-bottom: 20px;
+                            padding-left: 0px !important;
+                        }
+
+                        .list-group-item {
+                            display: flex;
+                            align-items: center;
+                            margin-bottom: 6px;
+                            border: none;
+                        }
+
+                        .thumbarticle-center {
+                            height: unset;
+                            margin-right: 10px;
+                        }
+
+                        .fe-title-color {
+                            margin-bottom: 0;
+                        }
+                    </style>
+
+                    <hr />
+
+                    <h2>Important dates</h2>
+                    <div class="importantday">
+                        <ul>
+                            <li>Abstract Submission Deadline: 6th May 2024</li>
+                            <li>Full Paper Submission Deadline (only applied to participants submitting their Full papers for offline Presentation and possible Publication): 5th August 2024</li>
+                            <li>Notification of Acceptance Deadline: 19th August 2024</li>
+                            <li>Author registration and Fee payment: 19th October 2024</li>
+                            <li>Conference Date: 30th November & 1st December 2024</li>
+                        </ul>
+                    </div>
+
+                    <style>
+
+                        table tr {
+                            font-weight: normal;
+                        }
+
+                        table th {
+                            font-weight: normal;
+                        }
+                    </style>
+
+                    <h2>Conference Fee</h2>
+
+                    <div class="tbfee-right">
+                        <p>International Authors/Listeners</p>
+                        <table>
+                            <tr>
+                                <th rowspan="2">Registration Type</th>
+                                <th style="text-align: center;">Region</th>
+                                <th colspan="2" style="text-align: center;">Inclusive Package</th>
+                            </tr>
+                            <tr>
+                                <td>International</td>
+                                <td>Include Gala dinner</td>
+                                <td>Include Academic tour</td>
+                            </tr>
+                            <tr>
+                                <td>Author (Regular)</td>
+                                <td>300 USD</td>
+                                <td>Yes</td>
+                                <td>Yes</td>
+                            </tr>
+                            <tr>
+                                <td>Author (Student)</td>
+                                <td>250 USD</td>
+                                <td>Yes</td>
+                                <td>Yes</td>
+                            </tr>
+                            <tr>
+                                <td>Listener</td>
+                                <td>100 USD</td>
+                                <td>Yes</td>
+                                <td>Yes</td>
+                            </tr>
+                        </table>
+                        <p>Domestic Authors/Listeners</p>
+                        <table>
+                            <tr>
+                                <th rowspan="2">Registration Type</th>
+                                <th style="text-align: center;">Region</th>
+                                <th colspan="2" style="text-align: center;">Inclusive Package</th>
+                            </tr>
+                            <tr>
+                                <td>Vietnam</td>
+                                <td>Include Gala dinner</td>
+                                <td>Include Academic tour</td>
+                            </tr>
+                            <tr>
+                                <td>Author (Regular)</td>
+                                <td>5,000,000 VND</td>
+                                <td>Yes</td>
+                                <td>Yes</td>
+                            </tr>
+                            <tr>
+                                <td>Author (Student)</td>
+                                <td>4,500,000 VND</td>
+                                <td>Yes</td>
+                                <td>Yes</td>
+                            </tr>
+                            <tr>
+                                <td>Listener</td>
+                                <td>1,000,000 VND</td>
+                                <td>Yes</td>
+                                <td>Yes</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <h2>Contact</h2>
+                    <div class="importantday">
+                        Website: science.fpt.edu.vn/@text<br />
+                        Phone: +84 2466549806<br />
+                        Email: <a href="mailto:fcbem@fe.edu.vn">fcbem@fe.edu.vn</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    @RenderSection("Body", required: false)
+
+    <div id="navbarViewerTemp" style="position:unset;margin:0px;"> </div>
+    <div class="block_infor">
+        <div class="widget_3">
+            <div class="region region-topwidget-first">
+                <div id="block-icfe2022-keynotespeakers-4"
+                     class="block">
+                    <h2 class="title"><a href="https://science.fpt.edu.vn/FCBEM24/keynote">Keynote Speakers</a></h2>
+                    <div class="content">
+                        <div class="clearfix text-formatted field field--name-body field--type-text-with-summary field--label-hidden field__item">
+                            <p>
+                                <ul style="list-style: disc; font-size: 16px;">
+                                    <li>Prof. Léo-Paul Dana</li>
+                                    <li>Prof. Fang Lee Cooke</li>
+                                </ul>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="region region-topwidget-second">
+                <div id="block-icfe2022-conferencethemes-2"
+                     class="block block-block-content block-block-content06727641-0bf0-4ac5-86ed-c12f4e1b72d5">
+                    <h2 class="title" style>Conference Themes</h2>
+                    <div class="content">
+                        <div class="clearfix text-formatted field field--name-body field--type-text-with-summary field--label-hidden field__item">
+
+                            <p>
+                                The main theme of the Conference is in
+                                the following
+                                fields:
+                            </p>
+                            <ul style="list-style: disc; font-size: 16px;">
+                                <li>Economics</li>
+                                <li>Operations</li>
+                                <li>Business Management</li>
+                                <li>Sustainability</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="region region-topwidget-third">
+                <div id="block-icfe2022-importantdates-2"
+                     class="block block-block-content">
+                    <h2 class="title">Important dates</h2>
+                    <div class="content">
+                        <div class="clearfix text-formatted field--label-hidden field__item">
+                            <ul style="list-style: disc; font-size: 16px;">
+                                <li>Abstract Submission Deadline: 6th May 2024</li>
+                                <li>Full Paper Submission Deadline (only applied to participants submitting their Full papers for offline Presentation and possible Publication): 5th August 2024</li>
+                                <li>Notification of Acceptance Deadline: 19th August 2024</li>
+                                <li>Author registration and Fee payment: 19th October 2024</li>
+                                <li>Conference Date: 30th November & 1st December 2024</li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <button id="scrollTop" title="Go to top">
+        <img src="~/img/Top.png" />
+    </button>
+
+    <footer>
+        <nav class="nav" id="nav-menu">
+            <div class="nav_content bd-grid">
+                <div class="nav_perfil">
+                    <div class="nav_img">
+                        <img src="~/img/footer2.png" alt />
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </footer>
+
+    <div style="font-size:9px;">
+        Version: @Model.Version
+    </div>
+
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/respond.min.js"></script>
+    <script src="~/js/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/js/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/js/jquery-ui-1.12.1.min.js"></script>
+    <script src="~/js/bootstrap-dropdownhover.min.js"></script>
+    <script src="~/js/handleSearchArticle.js"></script>
+
+    <script src="~/js/layout.js"></script>
+</body>
+</html>

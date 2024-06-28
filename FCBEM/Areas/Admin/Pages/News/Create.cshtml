@@ -1,0 +1,63 @@
+﻿@page
+
+
+@model FCBEM24.Areas.Admin.Pages.News.CreateModel
+@{
+    ViewData["Title"] = "News_Create";
+}
+@await Component.InvokeAsync("StatusMessage", new { message = Model.StatusMessage })
+
+<form method="post" enctype="multipart/form-data">
+    <h4>Bài viết</h4>
+    <h2>Tạo mới</h2>
+    <div class="form-horizontal">
+        <hr />
+
+        <div class="row">
+            <div class="col-md-8">
+                @await Component.InvokeAsync("PaperViewComponent", new { paper = Model.Input, fileUpload = Model.FileUpload })
+
+            </div>
+
+            <div class="col-md-4">
+                @await Component.InvokeAsync("PaperAdjust", new { paper = Model.Input })
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+
+    <script src="~/js/ckeditor/ckeditor.js"></script>
+    <script src="~/js/jquery.validate.js"></script>
+    @*<script src="~/js/handleRelatedArticles.js"></script>*@
+    <script src="~/js/edit-article.js"></script>
+
+
+    <link href="~/css/awesome-bootstrap-checkbox.css" rel="stylesheet" />
+    <style type="text/css">
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .body-content {
+            flex: 1 0 auto;
+        }
+    </style>
+    @*<script src="~/js/ckeditor/ckeditor.js"></script>*@
+    <script src="~/js/ckeditor/adapters/jquery.js"></script>
+
+
+</form>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
