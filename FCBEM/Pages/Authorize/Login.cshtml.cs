@@ -9,6 +9,7 @@ using FCBEMModel;
 using FCBEMModel.Models.Authorize;
 
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,6 +17,7 @@ using static Core.Commons.FCBEMConstants;
 
 namespace FCBEM24.Pages.Authorize
 {
+    [AllowAnonymous]
     public class LoginModel(SignInManager<User> signInManager, ILogger<LoginModel> logger, UserManager<User> userManager, DatabaseContext context, IConfiguration configuration) : IChangePageModel(context, configuration)
     {
         public class LoginInputModel
@@ -89,6 +91,13 @@ namespace FCBEM24.Pages.Authorize
                 User user = await userManager.FindByEmailAsync(Input.Email);
                 if (user != null)
                 {
+                    if (await userManager.IsLockedOutAsync(user))
+                    {
+                        // Người dùng bị khóa, xử lý tùy thuộc vào yêu cầu của bạn
+                        // Ví dụ: Hiển thị thông báo cho người dùng
+                        StatusMessage = new StatusMessage("Account is locked! (Tài khoản của bạn đã bị khóa.)", false).ToJSon();
+                        return Page();
+                    }
                     // Gỡ bỏ việc theo dõi đối tượng User
                     //_context.Entry(user).State = EntityState.Detached;
 
@@ -104,15 +113,17 @@ namespace FCBEM24.Pages.Authorize
                             ReturnUrl = null,
                             ProjectName = ProjectName,
                             ProjectYear = ProjectYear,
+                            Secondwait=100
                         });
+                        //return RedirectToPage("./Login");
                     }
                 }
                 StatusMessage = new StatusMessage("Wrong password. Please try again or click Forget Password", false).ToJSon();
             }
             catch (Exception ex)
             {
-                //StatusMessage = new StatusMessage(ex.Message, false).ToJSon();
-                //_logger.LogError(ex, ex.Message);
+                StatusMessage = new StatusMessage(ex.Message, false).ToJSon();
+                logger.LogError(ex, ex.Message);
             }
             return Page();
         }

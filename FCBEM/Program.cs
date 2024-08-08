@@ -8,6 +8,7 @@ using static Core.Commons.FCBEMConstants;
 using Core.Models.Utility;
 using Core.Services;
 using Core.Interfaces;
+using Core.Commons.Extentions;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
@@ -25,12 +26,12 @@ builder.Services.AddDbContextPool<DatabaseContext>(options =>
 });
 
 //add log
-//builder.Logging.AddDbLogger(options =>
-//{
-//    IConfigurationSection configurationSection = builder.Configuration.GetSection("Logging").GetSection("Database").GetSection("Options");
-//    configurationSection.GetSection("ConnectionString").Value = connectstring;
-//    configurationSection.Bind(options);
-//});
+builder.Logging.AddDbLogger(options =>
+{
+    IConfigurationSection configurationSection = builder.Configuration.GetSection("Logging").GetSection("Database").GetSection("Options");
+    configurationSection.GetSection("ConnectionString").Value = connectstring;
+    configurationSection.Bind(options);
+});
 
 builder.Services.AddAuthorization(options =>
 {

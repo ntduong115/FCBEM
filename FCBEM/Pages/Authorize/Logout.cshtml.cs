@@ -21,7 +21,7 @@ namespace FCBEM24.Pages.Authorize
             if (!signInManager.IsSignedIn(User)) return RedirectToPage($"~/");
 
             await signInManager.SignOutAsync();
-            logger.LogInformation("User logged out");
+            logger.LogInformation($"User logged out {User.Identity.Name}");
 
 
             return ViewComponent(MessagePageViewComponent.COMPONENTNAME,
