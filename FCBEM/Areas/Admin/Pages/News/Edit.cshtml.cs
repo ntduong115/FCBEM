@@ -5,19 +5,19 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-using FCBEM24.Commons.Authorizations;
-using FCBEM24.Commons.PageModels;
-using static Core.Commons.FCBEMConstants;
-using FCBEMModel.Models.Authorize;
-using FCBEMModel;
+using FCBEM.Commons.Authorizations;
+using FCCore.PageModels;
+using static Core.Commons.FCConstants;
+using Model.Models.Authorize;
+using Model;
 using Core.Models.Utility;
 using Core.Commons;
-using FCBEMModel.PaperModels;
+using Model.PaperModels;
 
-namespace FCBEM24.Areas.Admin.Pages.News
+namespace FCBEM.Areas.Admin.Pages.News
 {
     [AuthorizeCustomize(RoleName.Admin)]
-    public class EditModel(UserManager<User> userManager, IWebHostEnvironment environment, DatabaseContext context, IConfiguration configuration) : INewsPageModelFCBEM(userManager, context, configuration)
+    public class EditModel(UserManager<User> userManager, IWebHostEnvironment environment, DatabaseContext context, IConfiguration configuration) : INewsPageModel(userManager, context, configuration)
     {
         protected readonly IWebHostEnvironment environment = environment;
 

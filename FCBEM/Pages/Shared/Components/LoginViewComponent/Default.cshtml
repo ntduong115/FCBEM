@@ -5,7 +5,7 @@
 @inject UserManager<User> UserManager
 @{
     string name = " ";
-    string nameIdentifier = User.FindFirstValue(ClaimTypes.NameIdentifier);
+    string? nameIdentifier = User.FindFirstValue(ClaimTypes.NameIdentifier);
     if (nameIdentifier != null)
     {
         User user = await UserManager.FindByIdAsync(nameIdentifier) ?? new User();
@@ -30,7 +30,7 @@
     {
         <li class="dropdown">
 
-            @if (User.IsInRole(Core.Commons.FCBEMConstants.RoleName.Admin))
+            @if (User.IsInRole(Core.Commons.FCConstants.RoleName.Admin))
             {
                 <a href="#" class="dropdown-toggle" data-hover="dropdown">
                     Hello Admin
@@ -43,11 +43,8 @@
                 </a>
             }
 
-
-
-
             <ul class="dropdown-menu fadeIn">
-                @if (User.IsInRole(Core.Commons.FCBEMConstants.RoleName.Admin))
+                @if (User.IsInRole(Core.Commons.FCConstants.RoleName.Admin))
                 {
                     <li>
                         <a class="dropdown-item nav-link btn btn-link text-dark"  asp-area="Admin" asp-page="/News/Index" style="font-size: 10px">News Manager</a>
@@ -59,7 +56,7 @@
                         <a class="dropdown-item nav-link btn btn-link text-dark" asp-area="Admin" asp-page="/Registrations/Index" style="font-size: 10px">Registration Manager </a>
                     </li>
                 }
-                @if (User.IsInRole(Core.Commons.FCBEMConstants.RoleName.Client))
+                @if (User.IsInRole(Core.Commons.FCConstants.RoleName.Client))
                 {
 
                     <li>
@@ -90,14 +87,14 @@
             </ul>
         </li>
 
-        <form style="display:none" id="logoutForm" class="dropdown-item" asp-area="" asp-page="/Authorize/Logout" asp-route-returnUrl="@Url.Page("//Index", new { area = "" })">
+        <form style="display:none" id="logoutForm" class="dropdown-item" asp-area="" asp-page="/Authorize/Logout">
         </form>
     }
     else
     {
         <li class="regisloginblock">
-            <a style="font-size: 12px;" class="nav-link text-dark" id="register" asp-area="" asp-page="/Authorize/Register">Register</a>
-            <a style="font-size: 12px;" class="nav-link text-dark" id="login" asp-area="" asp-page="/Authorize/Login">Login</a>
+            <a style="font-size: 12px;" class="nav-link text-dark" asp-page="/Authorize/Register">Register</a>
+            <a style="font-size: 12px;" class="nav-link text-dark" asp-page="/Authorize/Login">Login</a>
         </li>
     }
 </ul>

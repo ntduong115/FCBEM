@@ -22,6 +22,7 @@ namespace Core.Commons
             IStringLocalizer localizer = factory.Create(type.Name, assemblyName.Name);
             return localizer;
         }
+
         public static IStringLocalizer GetSubPathStringLocalizer<T>(IStringLocalizerFactory factory)
         {
             var type = typeof(T).GetTypeInfo();
@@ -112,6 +113,7 @@ namespace Core.Commons
                             .GetCustomAttribute<DisplayAttribute>()
                             .GetName();
         }
+
         public static string? GetDisplayName(this object enumValue)
         {
             return enumValue.GetType()
@@ -137,6 +139,7 @@ namespace Core.Commons
             }
             return string.Empty;
         }
+
         public static Image ResizeImage(Image original, Size size, bool IsCropped)
         {
             if (size.Width < original.Width || size.Height < original.Height)
@@ -169,8 +172,6 @@ namespace Core.Commons
             }
             return null;
         }
-
-
 
         public static void TryUpdateManyToMany<T, TKey>(this DbContext context, IEnumerable<T> currentItems, IEnumerable<T> newItems, Func<T, TKey> getKey) where T : class
         {

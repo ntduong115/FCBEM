@@ -1,10 +1,10 @@
 using Core.Interfaces;
 using Core.Models.Utility;
 
-using FCBEM24.Commons.PageModels;
+using FCCore.PageModels;
 
-using FCBEMModel;
-using FCBEMModel.Models.Authorize;
+using Model;
+using Model.Models.Authorize;
 
 using Microsoft.AspNetCore.Identity;
 
@@ -16,10 +16,10 @@ using MimeKit.Utils;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Web;
 
-using static Core.Commons.FCBEMConstants;
+using static Core.Commons.FCConstants;
 
 
-namespace FCBEM24.Pages.Authorize
+namespace FCBEM.Pages.Authorize
 {
 
     public class ForgotPassModel(DatabaseContext context, IWebHostEnvironment environment, UserManager<User> userManager, IEmailSender iEmailSender, IConfiguration configuration) : IChangePageModel(context, configuration)
@@ -54,6 +54,13 @@ namespace FCBEM24.Pages.Authorize
 
         public async Task<IActionResult> OnPostAsync()
         {
+
+            if (string.IsNullOrEmpty(Input.Email))
+            {
+                StatusMessage = new StatusMessage("Please enter mail", false).ToJSon();
+                return Page();
+            }
+
             User user = await userManager.FindByEmailAsync(Input.Email);
             if (user == null)
             {

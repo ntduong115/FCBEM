@@ -1,5 +1,5 @@
 ﻿@page "/Admin/News"
-@model FCBEM24.Areas.Admin.Pages.News.IndexModel
+@model FCBEM.Areas.Admin.Pages.News.IndexModel
 
 @{
     ViewData["Title"] = "News";
@@ -28,7 +28,7 @@
                 <label for="Status">
                     Trạng thái
                 </label>
-                <select asp-for="Input.Status" class="form-control" asp-items="Html.GetEnumSelectList<Core.Commons.FCBEMConstants.ArticleStatus>()">
+                <select asp-for="Input.Status" class="form-control" asp-items="Html.GetEnumSelectList<Core.Commons.FCConstants.ArticleStatus>()">
                     <option>"Combobox_All"</option>
                 </select>
             </div>

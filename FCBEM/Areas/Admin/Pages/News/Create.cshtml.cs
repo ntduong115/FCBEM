@@ -2,20 +2,20 @@
 using System.Drawing.Imaging;
 using Core.Commons;
 using Core.Models.Utility;
-using FCBEM24.Commons.Authorizations;
-using FCBEM24.Commons.PageModels;
-using FCBEMModel;
-using FCBEMModel.Models.Authorize;
-using FCBEMModel.PaperModels;
+using FCBEM.Commons.Authorizations;
+using FCCore.PageModels;
+using Model;
+using Model.Models.Authorize;
+using Model.PaperModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-using static Core.Commons.FCBEMConstants;
+using static Core.Commons.FCConstants;
 
-namespace FCBEM24.Areas.Admin.Pages.News
+namespace FCBEM.Areas.Admin.Pages.News
 {
     [AuthorizeCustomize(RoleName.Admin)]
-    public class CreateModel(UserManager<User> userManager, IWebHostEnvironment environment, DatabaseContext context, IConfiguration configuration) : INewsPageModelFCBEM(userManager, context, configuration)
+    public class CreateModel(UserManager<User> userManager, IWebHostEnvironment environment, DatabaseContext context, IConfiguration configuration) : INewsPageModel(userManager, context, configuration)
     {
         protected readonly IWebHostEnvironment environment = environment;
 

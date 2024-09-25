@@ -1,24 +1,25 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using FCBEM24.Commons.Authorizations;
-using FCBEMModel.PaperModels;
-using FCBEMModel.Models.Authorize;
-using FCBEMModel;
-using FCBEM24.Commons.PageModels;
-using static Core.Commons.FCBEMConstants;
+using FCBEM.Commons.Authorizations;
+using Model.PaperModels;
+using Model.Models.Authorize;
+using Model;
+using FCCore.PageModels;
+using static Core.Commons.FCConstants;
 using Core.Commons;
-using FCBEM24.BusinessLogic;
+using Core.Helpers;
 using Core.Models.Utility;
 using Core.Interfaces;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
-namespace FCBEM24.Areas.Client.Pages.Papers
+namespace FCBEM.Areas.Client.Pages.Papers
 {
     // Yêu cầu quyền truy cập bằng cách sử dụng AuthorizeCustomize và chỉ cho phép viết dữ liệu
     [AuthorizeCustomize(RoleName.Client)]
-    public class UpdateModel(UserManager<User>? userManager, IWebHostEnvironment environment, IEmailSender iEmailSender, DatabaseContext context, IConfiguration configuration) : IWritePageModel<Paper>(userManager, environment, context, configuration)
+    public class UpdateModel(UserManager<User>? userManager, IWebHostEnvironment environment, ILogger<UpdateModel> logger, IEmailSender iEmailSender, DatabaseContext context, IConfiguration configuration) : IWritePageModel<Paper>(userManager, environment, context, configuration)
     {
         [BindProperty(SupportsGet = true)]
         public Guid Id { get; set; }
@@ -44,7 +45,7 @@ namespace FCBEM24.Areas.Client.Pages.Papers
 
             Input = context.Papers.Where(p => p.Id == Id).Include(i => i.Authors).FirstOrDefault();
 
-            SubmissionTypes = new SelectList(FCBEMConstantsHelpers.SubmissionTypeSelectList, "Value", "Name", SubmissionType.FullPaper);
+            SubmissionTypes = new SelectList(FCConstantsHelpers.SubmissionTypeSelectList, "Value", "Name", SubmissionType.FullPaper);
             Input.Submission = SubmissionType.FullPaper;
             return Page();
         }
@@ -59,7 +60,7 @@ namespace FCBEM24.Areas.Client.Pages.Papers
                 {
                     ModelState.Clear();
                     StatusMessage = new StatusMessage("Please choose Corresponding author.", false).ToJSon();
-                    SubmissionTypes = new SelectList(FCBEMConstantsHelpers.SubmissionTypeSelectList, "Value", "Name", SubmissionType.FullPaper);
+                    SubmissionTypes = new SelectList(FCConstantsHelpers.SubmissionTypeSelectList, "Value", "Name", SubmissionType.FullPaper);
                     return Page();
                 }
                 correspondingAuthor.IsCorresponding = true;
@@ -67,7 +68,7 @@ namespace FCBEM24.Areas.Client.Pages.Papers
                 if (Input.Keywords.Split(',').Length is < 3 or > 5 && !Input.Keywords.Split(',').Any(a => a.Trim().Length < 3))
                 {
                     StatusMessage = new StatusMessage("Type 3-5 keywords here, separated by commas.", false).ToJSon();
-                    SubmissionTypes = new SelectList(FCBEMConstantsHelpers.SubmissionTypeSelectList, "Value", "Name", SubmissionType.FullPaper);
+                    SubmissionTypes = new SelectList(FCConstantsHelpers.SubmissionTypeSelectList, "Value", "Name", SubmissionType.FullPaper);
                     return Page();
                 }
 
@@ -77,6 +78,7 @@ namespace FCBEM24.Areas.Client.Pages.Papers
                 Input.UserId = user.Id;
 
 
+                logger.LogInformation("{userId} update paper", user.Id);
                 if (Input.FormFile != null)
                 {
                     string path = Path.Combine(PathUpload.PAPER, Methods.CombineSHA256(user.Id.ToString()));
@@ -146,7 +148,7 @@ namespace FCBEM24.Areas.Client.Pages.Papers
             }
             catch (Exception ex)
             {
-                SubmissionTypes = new SelectList(FCBEMConstantsHelpers.SubmissionTypeSelectList, "Value", "Name", SubmissionType.FullPaper);
+                SubmissionTypes = new SelectList(FCConstantsHelpers.SubmissionTypeSelectList, "Value", "Name", SubmissionType.FullPaper);
                 // Xử lý lỗi nếu có
                 StatusMessage = new StatusMessage("Error: " + ex.Message, false).ToJSon();
                 return Page();

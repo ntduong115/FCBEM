@@ -1,8 +1,8 @@
-using FCBEM24.Commons.PageModels;
+using FCCore.PageModels;
 
 using Microsoft.AspNetCore.Mvc;
 
-namespace FCBEM24.Pages
+namespace FCBEM.Pages
 {
     public class TestModel(IConfiguration configuration) : IPageModel(configuration)
     {

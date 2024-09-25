@@ -1,7 +1,8 @@
 ﻿@page
-@model FCBEM24.Pages.ContactModel
+@model FCBEM.Pages.ContactModel
 @{
     string text = $"{Model.ProjectName.ToUpper()} 20{Model.ProjectYear}";
+    ViewData["Title"] = "CFPContact"; 
 }
 
 <div class="lead"

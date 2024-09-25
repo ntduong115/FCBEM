@@ -1,10 +1,10 @@
 ﻿@page "{PageNumber?}"
 @using System.Globalization;
-@using static Core.Commons.FCBEMConstants
-@model FCBEM24.Areas.Client.Pages.Papers.IndexModel
+@using static Core.Commons.FCConstants
+@model FCBEM.Areas.Client.Pages.Papers.IndexModel
 @{
     ViewData["Title"] = "My Submission";
-    var pagingModel = new FCBEM24.Helpers.PagingModel()
+    var pagingModel = new Core.Helpers.PagingModel()
             {
                 PageNumber = Model.PageNumber,
                 CountPages = Model.CountPages,
@@ -58,21 +58,21 @@ else
                             }
                             <td style="text-align: justify;"><a href="~/@item.File">@item.ManuscriptTitle (file)</a></td>
                         <td style="white-space: nowrap;">
-                            @if (item.Status == Core.Commons.FCBEMConstants.PaperStatus.Reject)
+                            @if (item.Status == Core.Commons.FCConstants.PaperStatus.Reject)
                             {
                                 <strong style="color: red;">Reject</strong>
                             }
-                            else if (item.Status == Core.Commons.FCBEMConstants.PaperStatus.Accepted)
+                                else if (item.Status == Core.Commons.FCConstants.PaperStatus.Accepted)
                             {
                                     <strong style="color: green;">Accepted</strong>
                             }
                             else
                             {
-                                    <strong>@Enum.GetName(typeof(Core.Commons.FCBEMConstants.PaperStatus), item.Status)</strong>
+                                    <strong>@Enum.GetName(typeof(Core.Commons.FCConstants.PaperStatus), item.Status)</strong>
                              }
                             </td>
                             <td>
-                                @if (item.Submission == SubmissionType.AbstractPAPP && item.Status == Core.Commons.FCBEMConstants.PaperStatus.Accepted)
+                                @if (item.Submission == SubmissionType.AbstractPAPP && item.Status == Core.Commons.FCConstants.PaperStatus.Accepted)
                                 {
                                     <a class="btn btn-primary" asp-page="./Update" asp-route-Id="@item.Id" title="Submit Full Paper">↟</a>
                                 }

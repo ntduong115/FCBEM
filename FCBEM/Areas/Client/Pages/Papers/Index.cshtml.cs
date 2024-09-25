@@ -1,9 +1,9 @@
-using FCBEM24.Commons.Authorizations;
-using FCBEM24.Commons.PageModels;
+using FCBEM.Commons.Authorizations;
+using FCCore.PageModels;
 
-using FCBEMModel;
-using FCBEMModel.Models.Authorize;
-using FCBEMModel.PaperModels;
+using Model;
+using Model.Models.Authorize;
+using Model.PaperModels;
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -11,9 +11,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 using System.Security.Claims;
 
-using static Core.Commons.FCBEMConstants;
+using static Core.Commons.FCConstants;
 
-namespace FCBEM24.Areas.Client.Pages.Papers
+namespace FCBEM.Areas.Client.Pages.Papers
 {
     [AuthorizeCustomize(RoleName.Client)]
     public class IndexModel(UserManager<User> userManager, DatabaseContext context, IConfiguration configuration) : IReadPageModel<Paper>(userManager, context, configuration)

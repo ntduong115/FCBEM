@@ -1,0 +1,98 @@
+﻿@page "/Admin/Authors/{Id?}"
+@model FCAI.Areas.Admin.Pages.Authors.IndexModel
+
+@{
+    ViewData["Title"] = "Authors";
+}
+
+@await Component.InvokeAsync("StatusMessage", new { message = Model.StatusMessage })
+
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <h4>Title</h4>
+        <p style="font-size: 12px; font-weight: normal;">
+            @Model.ListData.First().Paper.ManuscriptTitle
+        </p>
+    </div>
+    <div class="col-md-6 mb-3">
+        <h4>Keywords</h4>
+        <p style="font-size: 12px; font-weight: normal;">
+            @Model.ListData.First().Paper.Keywords
+        </p>
+    </div>
+    <style>
+        .custom-divider {
+            border-top: 1px solid green;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            min-width: 100%;
+        }
+    </style>
+    <div class="col-md-12 mb-3">
+        <div class="custom-divider"></div>
+    </div>
+    <div class="col-md-12 mb-3">
+        <h4>Abstract</h4>
+        <p style="font-size: 12px; font-weight: normal;">
+            @Model.ListData.First().Paper.Abstract
+        </p>
+    </div>
+    <div class="col-md-12 mb-3">
+        <div class="custom-divider"></div>
+    </div>
+    <div class="col-md-12 mb-3">
+        <h4>Authors</h4>
+        <table class="table table-hover">
+            <thead>
+                <tr class="bg-success">
+                    <th class="text-center" scope="col">First Name</th>
+                    <th class="text-center" scope="col">Middle Name</th>
+                    <th class="text-center" scope="col">Last Name</th>
+                    <th class="text-center" scope="col">Country</th>
+                    <th class="text-center" scope="col">Affiliation</th>
+                    <th class="text-center" scope="col">Email</th>
+                    <th class="text-center" scope="col">Phone</th>
+                    <th class="text-center" scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var author in Model.ListData)
+                {
+                    <tr>
+                        <td>@author.FirstName</td>
+                        <td>@author.MiddleName</td>
+                        <td>@author.LastName</td>
+                        <td>@author.Country</td>
+                        <td>@author.Affiliation</td>
+                        <td>@author.Email</td>
+                        <td>@author.Phone</td>
+
+                        @if (author.IsCorresponding)
+                        {
+                            <td><strong>Corresponding author</strong></td>
+                        }
+                        else
+                        {
+                            <td>Co-author</td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-12 mb-3">
+        <div class="custom-divider"></div>
+    </div>
+    <div class="col-md-12 mb-3">
+        <h4>File</h4>
+        <p style="font-size: 12px; font-weight: normal;">
+            <a href="~/@Model.ListData.First().Paper.File">@GetFileNameWithoutExtension(Model.ListData.First().Paper.File)</a>
+        </p>
+    </div>
+</div>
+@functions {
+    string GetFileNameWithoutExtension(string filePath)
+    {
+        return System.IO.Path.GetFileNameWithoutExtension(filePath);
+    }
+}

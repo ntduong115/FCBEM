@@ -1,6 +1,6 @@
-﻿using FCBEM24.Commons.PageModels;
+﻿using FCCore.PageModels;
 
-namespace FCBEM24.Pages
+namespace FCBEM.Pages
 {
     public class SubmissionModel(IConfiguration configuration) : IPageModel(configuration)
     {

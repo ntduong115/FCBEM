@@ -1,0 +1,138 @@
+﻿@page "{PageNumber?}"
+@using System.Globalization;
+@model FCAI.Areas.Admin.Pages.Submission.IndexModel
+@{
+    ViewData["Title"] = " Submission Manager";
+    var pagingModel = new Core.Helpers.PagingModel()
+            {
+                PageNumber = Model.PageNumber,
+                CountPages = Model.CountPages,
+                GenerateUrl = (int? p) => $"/{Model.ProjectName}{Model.ProjectYear}/Admin/Submission/" + p.ToString()
+            };
+}
+
+@section styles {
+    <style>
+        #searchForm {
+            margin-bottom: 10px;
+        }
+    </style>
+}
+
+@await Component.InvokeAsync("StatusMessage", new { message = Model.StatusMessage })
+
+<partial name="_Paging" model="@pagingModel" />
+
+<div class="row">
+    <div class="col-md-12">
+        <form>
+        </form>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <form method="get" id="searchForm" asp-antiforgery="true">
+            <input asp-for="PageNumber" hidden />
+            <div class="row">
+                <div class="col-md-6 mb-6">
+                    <label style="font-size: 14px; font-weight: normal" asp-for="Input.Submission" for="Submission">Submission Type:</label>
+                    <select onchange="submissionChange(this);" style="font-size: 14px; font-weight: normal;" asp-for="Input.Submission" asp-items="@Model.SubmissionTypes" class="form-control"></select>
+                </div>
+            </div>
+        </form>
+        @if (Model.ListData.Count == 0)
+        {
+            <div class="no-infor">
+                <h4>There are currently no activities</h4>
+            </div>
+        }
+        else
+        {
+            <form method="post" asp-antiforgery="true">
+
+                <input asp-for="Input.Submission" hidden />
+                <div class="row">
+                    <div class="col-md-6 mb-6">
+                        <div class="panel panel-default">
+                            <div class="panel-body">Export File</div>
+                            <div class="panel-footer">
+                                <input type="submit" class="btn btn-primary" value="Export By Type" asp-page-handler="Excel" />
+                                <input type="submit" class="btn btn-primary" value="Export All" asp-page-handler="ExcelAll" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-6">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                Download File
+                            </div>
+                            <div class="panel-footer">
+                                <div class="row">
+                                    <div class="col-md-6 mb-6">
+                                        <select asp-for="Status" asp-items="@Model.PaperStatuses" class="form-control"></select>
+                                    </div>
+                                    <input type="submit" class="btn btn-primary" value="Download" asp-page-handler="Download" />
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-6"><label><input asp-for="IsAllSubmissonType" /> All Submission Type</label></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-hover">
+                    <thead>
+                        <tr class="bg-success">
+                            <th class="text-center" style="white-space: nowrap;" scope="col">Full Name</th>
+                            <th class="text-center" style="width: 120px;" scope="col">Title</th>
+                            <th class="text-center" style="width: 300px;" scope="col">Abstract</th>
+                            <th class="text-center" style="width: 120px;" scope="col">File</th>
+                            <th class="text-center" scope="col">Detail</th>
+                            <th class="text-center" cope="col">Status</th>
+                            <th class="text-center" style="width: 50px;" scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model.ListData)
+                        {
+                            <tr>
+                                <th scope="row">@item.User.Name</th>
+                                <td style="text-align: justify;">@item.ManuscriptTitle</td>
+                                <td style="text-align: justify;">@item.Abstract</td>
+                                <td style="text-align: justify;"><a target="_blank" href="~/@item.File">@GetFileNameWithoutExtension(item.File) </a></td>
+                                <td><a asp-page="/Authors/Index" asp-route-Id="@item.Id">View</a></td>
+                                <td style="white-space: nowrap;">
+                                    @Enum.GetName(typeof(Core.Commons.FCConstants.PaperStatus), item.Status)
+                                </td>
+                                <td>
+                                    @if (item.Status == Core.Commons.FCConstants.PaperStatus.Pending)
+                                    {
+                                        <input id="btn-approve" type="submit" class="btn btn-success" value="✓" asp-page-handler="Approve" asp-route-Id="@item.Id" />
+
+                                        <input id="btn-reject" type="submit" class="btn btn-danger" value="X" asp-page-handler="Reject" asp-route-Id="@item.Id" />
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </form>
+        }
+    </div>
+</div>
+<partial name="_Paging" model="@pagingModel" />
+
+<script>
+    function submissionChange(value) {
+        $('inpu[name="Input.Submission"]').val($(value).val());
+        $('#searchForm').submit();
+    }
+</script>
+@functions {
+
+    string GetFileNameWithoutExtension(string filePath)
+    {
+        return System.IO.Path.GetFileNameWithoutExtension(filePath);
+    }
+}

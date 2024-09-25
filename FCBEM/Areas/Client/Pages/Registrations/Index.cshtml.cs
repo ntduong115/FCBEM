@@ -1,9 +1,9 @@
-using FCBEM24.Commons.Authorizations;
-using FCBEM24.Commons.PageModels;
+using FCBEM.Commons.Authorizations;
+using FCCore.PageModels;
 
-using FCBEMModel;
-using FCBEMModel.Models.Authorize;
-using FCBEMModel.Registrations;
+using Model;
+using Model.Models.Authorize;
+using Model.Registrations;
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 using System.Security.Claims;
 
-using static Core.Commons.FCBEMConstants;
+using static Core.Commons.FCConstants;
 
 namespace FCBEM.Areas.Client.Pages.Registrations
 {

@@ -1,17 +1,18 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using FCBEM24.Commons.Authorizations;
-using FCBEM24.Commons.PageModels;
-using FCBEMModel.Models.Authorize;
-using FCBEMModel;
+using FCBEM.Commons.Authorizations;
+using FCCore.PageModels;
+using Model.Models.Authorize;
+using Model;
 using Core.Commons;
 using Core.Models.Utility;
-using static Core.Commons.FCBEMConstants;
+using static Core.Commons.FCConstants;
+using Microsoft.Extensions.Logging;
 
-namespace FCBEM24.Areas.Client.Pages
+namespace FCBEM.Areas.Client.Pages
 {
     [AuthorizeCustomize(RoleName.Client)]
-    public class IndexModel(UserManager<User> userManager, DatabaseContext context, IConfiguration configuration) : IUserPageModel(userManager, context, configuration)
+    public class IndexModel(UserManager<User> userManager, DatabaseContext context, IConfiguration configuration, ILogger<IndexModel> logger) : IUserPageModel(userManager, context, configuration)
     {
         [BindProperty]
         public InputModel Input { set; get; }
@@ -51,6 +52,8 @@ namespace FCBEM24.Areas.Client.Pages
                 StatusMessage = new StatusMessage("Error: Không có thông tin về tài khoản").ToJSon();
                 return Page();
             }
+
+            logger.LogInformation("{userId} update information", User.Identity.Name);
             var id = userManager.GetUserId(User);
             var result = await userManager.FindByIdAsync(id);
             if (result != null)

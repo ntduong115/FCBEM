@@ -1,14 +1,14 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-using static Core.Commons.FCBEMConstants;
-using FCBEM24.Commons.PageModels;
-using FCBEMModel;
-using FCBEMModel.Models.Authorize;
+using static Core.Commons.FCConstants;
+using FCCore.PageModels;
+using Model;
+using Model.Models.Authorize;
 using Core.Models.Utility;
-using FCBEM24.Commons.Authorizations;
+using FCBEM.Commons.Authorizations;
 
-namespace FCBEM24.Areas.Admin.Pages.Manager
+namespace FCBEM.Areas.Admin.Pages.Manager
 {
     [AuthorizeCustomize(RoleName.Admin)]
     public class CreateUserModel(UserManager<User> userManager, DatabaseContext context, IConfiguration configuration, ILogger<CreateUserModel> logger) : IChangePageModel(context, configuration)

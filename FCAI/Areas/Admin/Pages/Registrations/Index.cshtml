@@ -1,0 +1,86 @@
+﻿@page "{PageNumber?}"
+@using System.Globalization;
+@model FCAI.Areas.Admin.Pages.Registrations.IndexModel
+@{
+    var pagingModel = new Core.Helpers.PagingModel()
+            {
+                PageNumber = Model.PageNumber,
+                CountPages = Model.CountPages,
+                GenerateUrl = (int? p) => $"/{Model.ProjectName}{Model.ProjectYear}/Admin/Registrations/" + p.ToString()
+            };
+}
+
+@await Component.InvokeAsync("StatusMessage", new { message = Model.StatusMessage })
+
+@if (Model.ListData.Count == 0)
+{
+    <div class="no-infor">
+    <h4>There are currently no activities</h4>
+</div>
+}
+else
+{
+    <partial name="_Paging" model="@pagingModel" />
+    <div class="row">
+    <div class="col-md-12 mb-3">
+        <form method="post">
+            <input id="btn-primary" type="submit" class="btn btn-primary" value="Export to Excel"
+                asp-page-handler="Excel" />
+            <input id="btn-primary2" type="submit" class="btn btn-primary" value="Download All Files"
+                asp-page-handler="Download" />
+            <table class="table table-hover">
+                <thead>
+                    <tr class="bg-success">
+                        <th style="font-size: 12px;font-weight: 600; width: 200px;" class="text-center" scope="col">Code
+                        </th>
+                        <th style="font-size: 12px;font-weight: 600; width: 200px;" class="text-center" scope="col">
+                            Paper ID</th>
+                        <th style="font-size: 12px;font-weight: 600; width: 120px;" class="text-center" scope="col">
+                            Registration Type</th>
+                        <th style="font-size: 12px;font-weight: 600; width: 100px;" class="text-center" scope="col">
+                            Student ID</th>
+                        <th style="font-size: 12px;font-weight: 600; width: 100px;" class="text-center" scope="col">
+                            Total</th>
+                        <th style="font-size: 12px;font-weight: 600" class="text-center" scope="col">Bill To</th>
+                        <th style="font-size: 12px;font-weight: 600; width: 70px;" class="text-center" scope="col">
+                            Status</th>
+                        <th style="font-size: 12px;font-weight: 600; width: 60px;" class="text-center" scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model.ListData)
+                        {
+                            <tr>
+                                <td style="text-align: justify;">@(item.RegistrationIdText ?? string.Empty)</td>
+                                <td style="text-align: justify;">@(item.Paper?.PaperIDText ?? string.Empty)</td>
+                                <td style="text-align: justify;">
+                                    <strong>@Enum.GetName(typeof(Core.Commons.FCConstants.RegistrationType),
+                                             item.RegistrationType)</strong>
+                                </td>
+                                <td style="text-align: justify;">@item.StudentId</td>
+                                <td style="text-align: justify;">@item.Total</td>
+                                <td style="text-align: justify;">@item.BillTo - @item.AnyRemark</td>
+                                <td style="text-align: justify;">
+                                    <strong>@Enum.GetName(typeof(Core.Commons.FCConstants.RegistrationStatus),
+                                             item.Status)</strong>
+                                </td>
+
+                                <td>
+                                    @if (item.Status == Core.Commons.FCConstants.RegistrationStatus.Pending)
+                                    {
+                                        <input id="btn-approve" type="submit" class="btn btn-success" value="✓"
+                                            asp-page-handler="Approve" asp-route-Id="@item.Id" />
+                                        <input id="btn-reject" type="submit" class="btn btn-danger" value="X"
+                                            asp-page-handler="Reject" asp-route-Id="@item.Id" />
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </div>
+    <partial name="_Paging" model="@pagingModel" />
+}

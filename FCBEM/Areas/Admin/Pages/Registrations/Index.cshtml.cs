@@ -3,21 +3,21 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
 using OfficeOpenXml;
-using FCBEM24.Commons.Authorizations;
-using static Core.Commons.FCBEMConstants;
-using FCBEM24.Commons.PageModels;
-using FCBEMModel;
+using FCBEM.Commons.Authorizations;
+using static Core.Commons.FCConstants;
+using FCCore.PageModels;
+using Model;
 
-using FCBEMModel.Models.Authorize;
+using Model.Models.Authorize;
 using Core.Interfaces;
-using FCBEMModel.Registrations;
+using Model.Registrations;
 using Core.Models.Utility;
 using MimeKit.Utils;
 using MimeKit;
 using System.IO.Compression;
 using Newtonsoft.Json;
 
-namespace FCBEM24.Areas.Admin.Pages.Registrations
+namespace FCBEM.Areas.Admin.Pages.Registrations
 {
     [AuthorizeCustomize(RoleName.Admin)]
     public class IndexModel(UserManager<User> userManager, IEmailSender iEmailSender, DatabaseContext context, IConfiguration configuration, IWebHostEnvironment environment) : IReadPageModel<Registration>(userManager, context, configuration)

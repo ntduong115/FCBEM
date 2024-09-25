@@ -1,9 +1,9 @@
 ﻿@page "{PageNumber?}"
 @using System.Globalization;
-@model FCBEM24.Areas.Admin.Pages.Submission.IndexModel
+@model FCBEM.Areas.Admin.Pages.Submission.IndexModel
 @{
     ViewData["Title"] = " Submission Manager";
-    var pagingModel = new FCBEM24.Helpers.PagingModel()
+    var pagingModel = new Core.Helpers.PagingModel()
             {
                 PageNumber = Model.PageNumber,
                 CountPages = Model.CountPages,
@@ -103,10 +103,10 @@
                                 <td style="text-align: justify;"><a target="_blank" href="~/@item.File">@GetFileNameWithoutExtension(item.File) </a></td>
                                 <td><a asp-page="/Authors/Index" asp-route-Id="@item.Id">View</a></td>
                                 <td style="white-space: nowrap;">
-                                    @Enum.GetName(typeof(Core.Commons.FCBEMConstants.PaperStatus), item.Status)
+                                    @Enum.GetName(typeof(Core.Commons.FCConstants.PaperStatus), item.Status)
                                 </td>
                                 <td>
-                                    @if (item.Status == Core.Commons.FCBEMConstants.PaperStatus.Pending)
+                                    @if (item.Status == Core.Commons.FCConstants.PaperStatus.Pending)
                                     {
                                         <input id="btn-approve" type="submit" class="btn btn-success" value="✓" asp-page-handler="Approve" asp-route-Id="@item.Id" />
 

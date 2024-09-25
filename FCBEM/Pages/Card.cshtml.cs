@@ -1,6 +1,6 @@
-﻿using FCBEM24.Commons.PageModels;
+﻿using FCCore.PageModels;
 
-namespace FCBEM24.Pages
+namespace FCBEM.Pages
 {
     public class CardModel(IConfiguration configuration) : IPageModel(configuration)
     {

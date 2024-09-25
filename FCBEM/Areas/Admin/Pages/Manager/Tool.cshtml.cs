@@ -1,14 +1,15 @@
-using FCBEM24.BusinessLogic;
-using FCBEM24.Commons.Authorizations;
-using FCBEM24.Commons.PageModels;
 
-using FCBEMModel;
+using Core.Helpers;
+using FCBEM.Commons.Authorizations;
+using FCCore.PageModels;
+
+using Model;
 
 using Microsoft.AspNetCore.Mvc;
 
-using static Core.Commons.FCBEMConstants;
+using static Core.Commons.FCConstants;
 
-namespace FCBEM24.Areas.Admin.Pages.Manager
+namespace FCBEM.Areas.Admin.Pages.Manager
 {
     [AuthorizeCustomize(RoleName.Admin)]
     public class ToolModel(DatabaseContext context, IConfiguration configuration, IWebHostEnvironment environment) : IChangePageModel(context, configuration)

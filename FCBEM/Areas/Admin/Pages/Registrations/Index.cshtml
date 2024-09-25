@@ -1,8 +1,8 @@
 ﻿@page "{PageNumber?}"
 @using System.Globalization;
-@model FCBEM24.Areas.Admin.Pages.Registrations.IndexModel
+@model FCBEM.Areas.Admin.Pages.Registrations.IndexModel
 @{
-    var pagingModel = new FCBEM24.Helpers.PagingModel()
+    var pagingModel = new Core.Helpers.PagingModel()
             {
                 PageNumber = Model.PageNumber,
                 CountPages = Model.CountPages,
@@ -55,19 +55,20 @@ else
                                 <td style="text-align: justify;">@(item.RegistrationIdText ?? string.Empty)</td>
                                 <td style="text-align: justify;">@(item.Paper?.PaperIDText ?? string.Empty)</td>
                                 <td style="text-align: justify;">
-                                    <strong>@Enum.GetName(typeof(Core.Commons.FCBEMConstants.RegistrationType),
+                                    <strong>
+                                        @Enum.GetName(typeof(Core.Commons.FCConstants.RegistrationType),
                                              item.RegistrationType)</strong>
                                 </td>
                                 <td style="text-align: justify;">@item.StudentId</td>
                                 <td style="text-align: justify;">@item.Total</td>
                                 <td style="text-align: justify;">@item.BillTo - @item.AnyRemark</td>
                                 <td style="text-align: justify;">
-                                    <strong>@Enum.GetName(typeof(Core.Commons.FCBEMConstants.RegistrationStatus),
+                                    <strong>@Enum.GetName(typeof(Core.Commons.FCConstants.RegistrationStatus),
                                              item.Status)</strong>
                                 </td>
 
                                 <td>
-                                    @if (item.Status == Core.Commons.FCBEMConstants.RegistrationStatus.Pending)
+                                    @if (item.Status == Core.Commons.FCConstants.RegistrationStatus.Pending)
                                     {
                                         <input id="btn-approve" type="submit" class="btn btn-success" value="✓"
                                             asp-page-handler="Approve" asp-route-Id="@item.Id" />

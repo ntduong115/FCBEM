@@ -1,5 +1,5 @@
-﻿@page "/Register"
-@model FCBEM24.Pages.Authorize.RegisterModel
+﻿@page 
+@model FCBEM.Pages.Authorize.RegisterModel
     
 @{
     ViewData["Title"] = "Register";
@@ -11,59 +11,50 @@
         color: red;
     }
 </style>
-<form method="post" asp-route-returlUrl="@Model.ReturnUrl">
+<form method="post" asp-antiforgery="true">
 
-    <span asp-validation-for="Input.Email"></span>
     <div class="input-group mb-2 row">
         <div class="col-md-5">
             <label class="required" asp-for="Input.Email"></label>
         </div>
         <div class="col-md-6" style="text-align:right">
-            <input asp-for="Input.Email" class="form-control" autofocus="autofocus" autocomplete="off" />
+            <input asp-for="Input.Email" class="form-control" autofocus="autofocus" autocomplete="off" required />
         </div>
 
     </div>
     
-    <span asp-validation-for="Input.Name"></span>
     <div class="input-group mb-2 row">
         <div class="col-md-5">
             <label class="required" asp-for="Input.Name"></label>
         </div>
         <div class="col-md-6" style="text-align:right">
-            <input asp-for="Input.Name" class="form-control" autofocus="autofocus" autocomplete="off" />
+            <input asp-for="Input.Name" class="form-control" autofocus="autofocus" autocomplete="off" required />
         </div>
 
     </div>
 
-    <span asp-validation-for="Input.Password"></span>
     <div class="input-group mb-2 row">
         <div class="col-md-5">
             <label class="required" asp-for="Input.Password"></label>
         </div>
         <div class="col-md-6" style="text-align:right">
-            <input asp-for="Input.Password" class="form-control" autofocus="autofocus" autocomplete="off" />
+            <input asp-for="Input.Password" class="form-control" autofocus="autofocus" autocomplete="off" required />
         </div>
 
     </div>
 
-
-
-
-
-
-    <span asp-validation-for="Input.ConfirmPassword"></span>
     <div class="input-group mb-2 row">
         <div class="col-md-5">
             <label class="required" asp-for="Input.ConfirmPassword"></label>
         </div>
         <div class="col-md-6" style="text-align:right">
-            <input asp-for="Input.ConfirmPassword" class="form-control" autofocus="autofocus" autocomplete="off" />
+            <input asp-for="Input.ConfirmPassword" class="form-control" autofocus="autofocus" autocomplete="off" required />
         </div>
 
     </div>
 
     <div class="input-group mb-3">
-        <input style="width: 20%" type="submit" value="Register" class="btn btn-block btn-primary" />
+        <button style="width: 20%" type="submit" class="btn btn-block btn-primary">Register</button>
     </div>
     <div class="input-group mb-3">
         <a asp-page="./Login">Please log in with your account</a>

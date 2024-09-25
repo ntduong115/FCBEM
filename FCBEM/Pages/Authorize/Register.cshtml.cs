@@ -1,9 +1,9 @@
 ﻿using Core.Interfaces;
 
-using FCBEM24.Commons.PageModels;
+using FCCore.PageModels;
 
-using FCBEMModel;
-using FCBEMModel.Models.Authorize;
+using Model;
+using Model.Models.Authorize;
 
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
@@ -15,11 +15,11 @@ using Microsoft.AspNetCore.WebUtilities;
 
 using System.Text;
 
-using static Core.Commons.FCBEMConstants;
+using static Core.Commons.FCConstants;
 
 
 
-namespace FCBEM24.Pages.Authorize
+namespace FCBEM.Pages.Authorize
 {
     public class RegisterModel(
         UserManager<User> userManager,
@@ -29,18 +29,11 @@ namespace FCBEM24.Pages.Authorize
     {
         [BindProperty]
         public User Input { get; set; }
-        public SelectList Unit { set; get; }
-        public SelectList Area { set; get; }
 
-        public string ReturnUrl { get; set; }
 
-        // Xác thực từ dịch vụ ngoài (Googe, Facebook ... bài này chứa thiết lập)
-        public IList<AuthenticationScheme> ExternalLogins { get; set; }
-
-        public async Task OnGetAsync(string? returnUrl = null)
+        public async Task OnGetAsync()
         {
-            ReturnUrl = returnUrl;
-            ExternalLogins = (await signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+
         }
 
         private string GenerateRandomNumber(int length)
@@ -52,15 +45,13 @@ namespace FCBEM24.Pages.Authorize
         }
 
         // Đăng ký tài khoản theo dữ liệu form post tới
-        public async Task<IActionResult> OnPostAsync(string? returnUrl = null)
+        public async Task<IActionResult> OnPostAsync()
         {
             if (Input.Password != Input.ConfirmPassword)
             {
                 ModelState.AddModelError(string.Empty, "ConfirmPassword and password do not match.");
                 return Page();
             }
-
-            returnUrl ??= HttpContext.Request.PathBase.Value != string.Empty ? HttpContext.Request.PathBase.Value : "/";
 
             if (Input.Password != null && Input.Email != null && Input.Name != null && Input.ConfirmPassword == Input.Password)
             {
@@ -89,9 +80,9 @@ namespace FCBEM24.Pages.Authorize
                         code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
 
                         var callbackUrl = Url.Page(
-                            "~/Account/ConfirmEmail",
+                            "/Authorize/RegisterConfirmation",
                             pageHandler: null,
-                            values: new { area = "Identity", userId = user.Id, code, returnUrl },
+                            values: new {userId = user.Id, code },
                             protocol: Request.Scheme);
 
                         //// Gửi email    
@@ -107,13 +98,13 @@ namespace FCBEM24.Pages.Authorize
 
                             if (userManager.Options.SignIn.RequireConfirmedEmail)
                             {
-                                return RedirectToPage($"~/RegisterConfirmation", new { email = Input.Email, returnUrl });
+                                return RedirectToPage($"/Authorize/RegisterConfirmation", new { email = Input.Email });
                             }
                             else
                             {
                                 // Không cần xác thực - đăng nhập luôn
                                 await signInManager.SignInAsync(user, isPersistent: false);
-                                return LocalRedirect(returnUrl);
+                                return RedirectToPage("/Index");
                             }
                         }
                         foreach (var error in resultAddRole.Errors)
@@ -135,13 +126,13 @@ namespace FCBEM24.Pages.Authorize
 
                         if (userManager.Options.SignIn.RequireConfirmedEmail)
                         {
-                            return RedirectToPage($"~/RegisterConfirmation", new { email = Input.Email, returnUrl });
+                            return RedirectToPage("/Index", new { email = Input.Email });
                         }
                         else
                         {
                             // Không cần xác thực - đăng nhập luôn
                             await signInManager.SignInAsync(existingUser, isPersistent: false);
-                            return LocalRedirect(returnUrl);
+                            return RedirectToPage("/Index");
                         }
                     }
                     foreach (var error in resultAddRole.Errors)
@@ -151,12 +142,9 @@ namespace FCBEM24.Pages.Authorize
                 }
 
             }
- 
+
             return Page();
         }
-
-
-
     }
 }
 

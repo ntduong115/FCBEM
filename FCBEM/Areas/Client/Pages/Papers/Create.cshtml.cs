@@ -3,25 +3,26 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 using System.Globalization;
-using FCBEM24.Commons.Authorizations;
-using FCBEMModel.PaperModels;
-using FCBEMModel.Models.Authorize;
-using FCBEMModel;
-using FCBEM24.Commons.PageModels;
-using static Core.Commons.FCBEMConstants;
+using FCBEM.Commons.Authorizations;
+using Model.PaperModels;
+using Model.Models.Authorize;
+using Model;
+using FCCore.PageModels;
+using static Core.Commons.FCConstants;
 using Core.Commons;
-using FCBEM24.BusinessLogic;
+using Core.Helpers;
 using Core.Models.Utility;
 using Core.Interfaces;
 using MimeKit.Utils;
 using MimeKit;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Logging;
 
-namespace FCBEM24.Areas.Client.Pages.Papers
+namespace FCBEM.Areas.Client.Pages.Papers
 {
     // Yêu cầu quyền truy cập bằng cách sử dụng AuthorizeCustomize và chỉ cho phép viết dữ liệu
     [AuthorizeCustomize(RoleName.Client)]
-    public class CreateModel(UserManager<User>? userManager, IWebHostEnvironment environment, IEmailSender iEmailSender, DatabaseContext context, IConfiguration configuration) : IWritePageModel<Paper>(userManager, environment, context, configuration)
+    public class CreateModel(UserManager<User>? userManager, IWebHostEnvironment environment, ILogger<CreateModel> logger, IEmailSender iEmailSender, DatabaseContext context, IConfiguration configuration) : IWritePageModel<Paper>(userManager, environment, context, configuration)
     {
 
         public List<Author> Authors { get; set; }
@@ -53,7 +54,7 @@ namespace FCBEM24.Areas.Client.Pages.Papers
                 };
             }
             Input.Submission = SubmissionType.FullPaper;
-            SubmissionTypes = new SelectList(FCBEMConstantsHelpers.SubmissionTypeSelectList, "Value", "Name", Input.Submission);
+            SubmissionTypes = new SelectList(FCConstantsHelpers.SubmissionTypeSelectList, "Value", "Name", Input.Submission);
             return Page();
         }
 
@@ -78,7 +79,7 @@ namespace FCBEM24.Areas.Client.Pages.Papers
                 {
                     ModelState.Clear();
                     StatusMessage = new StatusMessage("Please choose Corresponding author.", false).ToJSon();
-                    SubmissionTypes = new SelectList(FCBEMConstantsHelpers.SubmissionTypeSelectList, "Value", "Name", Input.Submission);
+                    SubmissionTypes = new SelectList(FCConstantsHelpers.SubmissionTypeSelectList, "Value", "Name", Input.Submission);
                     return Page();
                 }
                 string mail = correspondingAuthor.Email;
@@ -89,7 +90,7 @@ namespace FCBEM24.Areas.Client.Pages.Papers
                 {
                     ModelState.Clear();
                     StatusMessage = new StatusMessage("Duplicate author mail.", false).ToJSon();
-                    SubmissionTypes = new SelectList(FCBEMConstantsHelpers.SubmissionTypeSelectList, "Value", "Name", Input.Submission);
+                    SubmissionTypes = new SelectList(FCConstantsHelpers.SubmissionTypeSelectList, "Value", "Name", Input.Submission);
                     return Page();
                 }
 
@@ -99,7 +100,7 @@ namespace FCBEM24.Areas.Client.Pages.Papers
                 if (Input.Keywords.Split(',').Length is < 3 or > 5 || Input.Keywords.Split(',').Any(a => a.Trim().Length < 3))
                 {
                     StatusMessage = new StatusMessage("Type 3-5 keywords here, separated by commas.", false).ToJSon();
-                    SubmissionTypes = new SelectList(FCBEMConstantsHelpers.SubmissionTypeSelectList, "Value", "Name", Input.Submission);
+                    SubmissionTypes = new SelectList(FCConstantsHelpers.SubmissionTypeSelectList, "Value", "Name", Input.Submission);
                     return Page();
                 }
 
@@ -115,6 +116,8 @@ namespace FCBEM24.Areas.Client.Pages.Papers
                     string url = await FileManager.SaveFileAsync(Input.FormFile, path, environment.WebRootPath);
                     Input.File = Url.Content(Path.Combine(path, url));
                 }
+
+                logger.LogInformation("{userId} create paper", user.Id);
 
                 context.Papers.Add(Input);
                 context.SaveChanges();
@@ -139,7 +142,7 @@ namespace FCBEM24.Areas.Client.Pages.Papers
                 }
                 catch (IOException ioExp)
                 {
-                    SubmissionTypes = new SelectList(FCBEMConstantsHelpers.SubmissionTypeSelectList, "Value", "Name", Input.Submission);
+                    SubmissionTypes = new SelectList(FCConstantsHelpers.SubmissionTypeSelectList, "Value", "Name", Input.Submission);
                     StatusMessage = new StatusMessage(ioExp.Message).ToJSon();
                     return Page();
                 }
@@ -148,7 +151,7 @@ namespace FCBEM24.Areas.Client.Pages.Papers
             }
             catch (Exception ex)
             {
-                SubmissionTypes = new SelectList(FCBEMConstantsHelpers.SubmissionTypeSelectList, "Value", "Name", Input.Submission);
+                SubmissionTypes = new SelectList(FCConstantsHelpers.SubmissionTypeSelectList, "Value", "Name", Input.Submission);
                 // Xử lý lỗi nếu có
                 StatusMessage = new StatusMessage("Error: " + ex.Message, false).ToJSon();
                 return Page();

@@ -1,13 +1,13 @@
 using Core.Commons;
 using Core.Models.Utility;
 
-using FCBEM24.BusinessLogic;
-using FCBEM24.Commons.Authorizations;
-using FCBEM24.Commons.PageModels;
+using Core.Helpers;
+using FCBEM.Commons.Authorizations;
+using FCCore.PageModels;
 
-using FCBEMModel;
-using FCBEMModel.Models.Authorize;
-using FCBEMModel.Registrations;
+using Model;
+using Model.Models.Authorize;
+using Model.Registrations;
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -20,14 +20,14 @@ using Newtonsoft.Json;
 
 using System.Security.Claims;
 
-using static Core.Commons.FCBEMConstants;
+using static Core.Commons.FCConstants;
 using Core.Interfaces;
 
 
 namespace FCBEM.Areas.Client.Pages.Registrations
 {
     [AuthorizeCustomize(RoleName.Client)]
-    public class CreateModel(UserManager<User>? userManager, IWebHostEnvironment environment, DatabaseContext context, IConfiguration configuration, IEmailSender iEmailSender) : IWritePageModel<Registration>(userManager, environment, context, configuration)
+    public class CreateModel(UserManager<User>? userManager, IWebHostEnvironment environment, ILogger<CreateModel> logger, DatabaseContext context, IConfiguration configuration, IEmailSender iEmailSender) : IWritePageModel<Registration>(userManager, environment, context, configuration)
     {
         public DateTime Expired { get; set; }
         public SelectList Positions { get; set; }
@@ -52,6 +52,7 @@ namespace FCBEM.Areas.Client.Pages.Registrations
                 return Page();
             }
 
+            logger.LogInformation("{userId} Create Registraion", userId);
             string error = string.Empty;
             if (Input.RegistrationType == RegistrationType.Author)
             {
@@ -148,9 +149,10 @@ namespace FCBEM.Areas.Client.Pages.Registrations
                 User user = await userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier) ?? string.Empty) ?? new User();
                 await iEmailSender.SendEmailAsync(Input.Email, subject, builder);
             }
-            catch (IOException ioExp)
+            catch (Exception ioExp)
             {
                 StatusMessage = new StatusMessage(ioExp.Message).ToJSon();
+                logger.LogError(ioExp, "send mail");
                 return Page();
             }
 
@@ -160,10 +162,10 @@ namespace FCBEM.Areas.Client.Pages.Registrations
 
         private void CreateSelectList(Guid user)
         {
-            Positions = new SelectList(FCBEMConstantsHelpers.PositionSelectList, "Value", "Name", null);
-            PresentationTypes = new SelectList(FCBEMConstantsHelpers.PresentationTypeSelectList, "Value", "Name", null);
-            RegistrationTypes = new SelectList(FCBEMConstantsHelpers.RegistrationTypeSelectList, "Value", "Name");
-            DietTypes = new SelectList(FCBEMConstantsHelpers.DietTypeSelectList, "Value", "Name");
+            Positions = new SelectList(FCConstantsHelpers.PositionSelectList, "Value", "Name", null);
+            PresentationTypes = new SelectList(FCConstantsHelpers.PresentationTypeSelectList, "Value", "Name", null);
+            RegistrationTypes = new SelectList(FCConstantsHelpers.RegistrationTypeSelectList, "Value", "Name");
+            DietTypes = new SelectList(FCConstantsHelpers.DietTypeSelectList, "Value", "Name");
             Papers = new SelectList(context.Papers.Where(p => p.UserId == user && p.VersionCode == ProjectName + ProjectYear && p.Status == PaperStatus.Accepted), "Id", "TitleSelectList");
         }
     }

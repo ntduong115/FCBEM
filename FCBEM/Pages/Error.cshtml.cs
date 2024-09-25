@@ -1,9 +1,9 @@
 ﻿using System.Diagnostics;
-using FCBEM24.Commons.PageModels;
+using FCCore.PageModels;
 
 using Microsoft.AspNetCore.Mvc;
 
-namespace FCBEM24.Pages;
+namespace FCBEM.Pages;
 
 [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
 [IgnoreAntiforgeryToken]

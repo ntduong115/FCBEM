@@ -1,9 +1,9 @@
 using Core.Models.Utility;
 
-using FCBEM24.Commons.PageModels;
+using FCCore.PageModels;
 
-using FCBEMModel;
-using FCBEMModel.Models.Authorize;
+using Model;
+using Model.Models.Authorize;
 
 using Microsoft.AspNetCore.Identity;
 
@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Web;
 
-namespace FCBEM24.Pages.Authorize
+namespace FCBEM.Pages.Authorize
 {
     public class ResetPassModel(DatabaseContext context, UserManager<User> userManager, IConfiguration configuration) : IChangePageModel(context, configuration)
     {

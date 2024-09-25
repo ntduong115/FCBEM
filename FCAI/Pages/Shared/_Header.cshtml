@@ -1,0 +1,111 @@
+﻿
+<header class="header" id="header">
+    <script src="~/js/banner_homepage.js"></script>
+    <script src="~/js/main.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="~/css/main.css">
+
+    <img class="bx bx-menu header_toggle" id="header-toggle"
+         src="https://cdn-icons-png.flaticon.com/512/2767/2767162.png"
+         style="width: 25px" />
+
+    <nav class="nav" id="nav-menu">
+        <div class="nav_content bd-grid">
+            <a href="~/" class="nav_perfil">
+                <div class="nav_img">
+                    <img src="~/img/banner-blue.png" alt />
+                </div>
+            </a>
+
+            <div class="nav_menu">
+                <!-- Option bar -->
+                <ul class="nav_list">
+                    <li id="userinfo_mobi" class="nav_item font_header dropdown">
+                        <style>
+                            .regisloginblock {
+                                display: flex !important;
+                            }
+                        </style>
+                    <li id="userinfo_mobi2" class="regisloginblock" style="font-size: 15px !important;  width: 100%">
+                            @await Component.InvokeAsync("mobiLoginViewComponent", null)
+                    </li>
+
+                    <li class="nav_item font_header">
+                        <a href="~/" class="nav_link active">Home</a>
+                    </li>
+                    <li class="nav_item font_header dropdown">
+
+                        <a href="#" class="nav_link dropdown_link">
+                            Information
+                            <img src="https://cdn-icons-png.flaticon.com/512/32/32195.png"
+                                 style="width:10px;margin-left:2px;"
+                                 class="bx bx-chevron-down dropdown_icon" />
+                        </a>
+
+                        <ul class="dropdown_menu">
+                            <li class="dropdown_item">
+                                <a href="~/organizer" class="nav_link">Organizers and Committees</a>
+                            </li>
+                            <li class="dropdown_item">
+                                <a href="~/keynote" class="nav_link">Keynote Speakers</a>
+                            </li>
+
+                            <li class="dropdown_item">
+                                <a href="~/visa" class="nav_link">Visa Information</a>
+                            </li>
+
+                            <li class="dropdown_item">
+                                <a href="~/tour" class="nav_link">Hanoi City Tour</a>
+                            </li>
+
+                            <li class="dropdown_item">
+                                <a href="~/accommodation" class="nav_link">Recommended Accommodation</a>
+                            </li>
+
+                            <li class="dropdown_item">
+                                <a href="~/card" class="nav_link">Infomation Card</a>
+                            </li>
+
+                            <li class="dropdown_item">
+                                <a href="~/program" class="nav_link">Conference Program</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="nav_item font_header">
+                        <a href="~/agenda" class="nav_link">Agenda</a>
+                    </li>
+                    <li class="nav_item font_header">
+                        <a href="~/publication" class="nav_link">Publication</a>
+                    </li>
+                    <li class="nav_item font_header">
+                        <a href="~/registration" class="nav_link">Registration</a>
+                    </li>
+                    <li class="nav_item font_header">
+                        <a href="~/cfp" class="nav_link">Call for Papers</a>
+                    </li>
+                    <li class="nav_item font_header">
+                        <a href="~/submission" class="nav_link">Paper Submission</a>
+                    </li>
+                    <li class="nav_item font_header">
+                        <a href="~/venue" class="nav_link">Venue</a>
+                    </li>
+
+                    <li class="nav_item font_header">
+                        <a href="~/gallery" class="nav_link">Gallery</a>
+                    </li>
+                    <li class="nav_item font_header">
+                        <a href="~/contact" class="nav_link">Contact Us</a>
+                    </li>
+
+                </ul>
+
+                <div id="userinfo" class="userinfo nav_menu">
+                    <div class="userinfo-content">
+                        @await Component.InvokeAsync("LoginViewComponent", null)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>

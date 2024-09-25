@@ -1,0 +1,39 @@
+﻿@page "/Login"
+@model FCAI.Pages.Authorize.LoginModel
+@{
+    ViewData["Title"] = "Login";
+    Layout = "_Layout_Auth";
+}
+
+@await Component.InvokeAsync("StatusMessage", new { message=Model.StatusMessage })
+<form method="post" asp-route-ReturnUrl="@Model.ReturnUrl">
+    <div class="input-group mb-3">
+        <div class="input-group-append">
+            <div class="input-group-text">
+                <span class="fas fa-envelope"></span>
+            </div>
+        </div>
+        <input asp-for="Input.Email" class="form-control" autofocus="autofocus" autocomplete="off" />
+    </div>
+
+    <div class="input-group mb-3">
+        <div class="input-group-append">
+            <div class="input-group-text">
+                <span class="fas fa-lock"></span>
+            </div>
+        </div>
+        <input asp-for="Input.Password" class="form-control" autofocus="autofocus" autocomplete="off" />
+    </div>
+
+    <div class="input-group mb-3">
+        <input style="width: 20%" type="submit" value="Login" class="btn btn-block btn-primary" />
+        <a style="margin-left:20px" asp-page="/Authorize/ForgotPass">Forget Password</a>
+    </div>
+
+   <div class="input-group mb-3">
+        <a asp-page="./Register">Please sign in without an account</a>
+    </div>
+
+
+    <span asp-validation-for="Input.Password"></span>
+</form>

@@ -3,12 +3,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OfficeOpenXml;
-using static Core.Commons.FCBEMConstants;
-using FCBEM24.Commons.PageModels;
-using FCBEMModel.PaperModels;
-using FCBEMModel.Models.Authorize;
-using FCBEM24.Commons.Authorizations;
-using FCBEMModel;
+using static Core.Commons.FCConstants;
+using FCCore.PageModels;
+using Model.PaperModels;
+using Model.Models.Authorize;
+using FCBEM.Commons.Authorizations;
+using Model;
 using Core.Interfaces;
 using MimeKit.Utils;
 using MimeKit;
@@ -18,7 +18,7 @@ using OfficeOpenXml.Style;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.IO.Compression;
 
-namespace FCBEM24.Areas.Admin.Pages.Submission
+namespace FCBEM.Areas.Admin.Pages.Submission
 {
     [AuthorizeCustomize(RoleName.Admin)]
     public class IndexModel : IReadPageModel<Paper>
@@ -55,8 +55,8 @@ namespace FCBEM24.Areas.Admin.Pages.Submission
                     Submission = SubmissionType.AbstractPO,
                 };
             }
-            SubmissionTypes = new SelectList(FCBEMConstantsHelpers.SubmissionTypeSelectList, "Value", "Name", Input.Submission);
-            PaperStatuses = new SelectList(FCBEMConstantsHelpers.PaperStatusSelectList, "Value", "Name");
+            SubmissionTypes = new SelectList(FCConstantsHelpers.SubmissionTypeSelectList, "Value", "Name", Input.Submission);
+            PaperStatuses = new SelectList(FCConstantsHelpers.PaperStatusSelectList, "Value", "Name");
             return Page();
         }
         //public IActionResult OnPost()
@@ -252,7 +252,7 @@ namespace FCBEM24.Areas.Admin.Pages.Submission
                     sheet.Cells[rowIdx, 5].Value = ab.Keywords;
                     sheet.Cells[rowIdx, 6].Value = ab.CreatedDate;
                     sheet.Cells[rowIdx, 7].Value = ab.PaperIDText;
-                    sheet.Cells[rowIdx, 8].Value = FCBEMConstantsHelpers.SubmissionTypeSelectList.FirstOrDefault(s => s.Value.ToString() == ab.Submission).Name;
+                    sheet.Cells[rowIdx, 8].Value = FCConstantsHelpers.SubmissionTypeSelectList.FirstOrDefault(s => s.Value.ToString() == ab.Submission).Name;
                     for (int j = 0; j < ab.Authors.Count; j++)
                     {
                         var au = ab.Authors.ElementAt(j);

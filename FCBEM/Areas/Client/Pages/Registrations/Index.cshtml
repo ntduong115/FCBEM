@@ -3,7 +3,7 @@
 @model FCBEM.Areas.Client.Pages.Registrations.IndexModel
 @{
     ViewData["Title"] = "My Registraions";
-    var pagingModel = new FCBEM24.Helpers.PagingModel()
+    var pagingModel = new Core.Helpers.PagingModel()
             {
                 PageNumber = Model.PageNumber,
                 CountPages = Model.CountPages,
@@ -50,13 +50,14 @@ else
                             <td style="text-align: justify;">@(item.RegistrationIdText ?? string.Empty)</td>
                             <td style="text-align: justify;">@(item.Paper?.PaperIDText ?? string.Empty)</td>
                             <td style="text-align: justify;">
-                                <strong>@Enum.GetName(typeof(Core.Commons.FCBEMConstants.RegistrationType),
+                                <strong>
+                                    @Enum.GetName(typeof(Core.Commons.FCConstants.RegistrationType),
                                          item.RegistrationType)</strong>
                             </td>
                             <td style="text-align: justify;">@item.Total</td>
                             <td style="text-align: justify;">@item.BillTo - @item.AnyRemark</td>
                             <td style="text-align: justify;">
-                                <strong>@Enum.GetName(typeof(Core.Commons.FCBEMConstants.PaperStatus), item.Status)</strong>
+                                <strong>@Enum.GetName(typeof(Core.Commons.FCConstants.PaperStatus), item.Status)</strong>
                             </td>
 
                         </tr>

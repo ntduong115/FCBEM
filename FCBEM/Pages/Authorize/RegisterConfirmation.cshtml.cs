@@ -1,12 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using FCBEM24.Commons.PageModels;
-using FCBEMModel;
-using FCBEMModel.Models.Authorize;
-using FCBEM24.ViewComponents;
+using FCCore.PageModels;
+using Model;
+using Model.Models.Authorize;
+using FCCore.ViewComponents;
 
-namespace FCBEM24.Pages.Authorize
+namespace FCBEM.Pages.Authorize
 {
     [AllowAnonymous]
     public class RegisterConfirmationModel(UserManager<User> userManager, DatabaseContext context, IConfiguration configuration) : IChangePageModel(context, configuration)
@@ -20,9 +20,8 @@ namespace FCBEM24.Pages.Authorize
         {
             if (email == null)
             {
-                return RedirectToPage($"~/RegisterConfirmation");
+                return RedirectToPage($"/RegisterConfirmation");
             }
-
 
             var user = await userManager.FindByEmailAsync(email);
             if (user == null)
@@ -32,28 +31,12 @@ namespace FCBEM24.Pages.Authorize
 
             if (user.EmailConfirmed)
             {
-                returnUrl ??= HttpContext.Request.PathBase.Value != string.Empty ? HttpContext.Request.PathBase.Value : "/";
-                return ViewComponent(MessagePageViewComponent.COMPONENTNAME,
-                        new MessagePageViewComponent.Message()
-                        {
-                            Title = "MessagePage",
-                            Htmlcontent = "User is confirmed, please wait to redirect",
-                            Urlredirect = returnUrl,
-                            ProjectName = ProjectName,
-                            ProjectYear = ProjectYear,
-                        }
-
-                );
+                return RedirectToPage("/Authorize/Register");
             }
 
             Email = email;
 
-            if (returnUrl != null)
-            {
-                UrlContinue = Url.Page($"~/RegisterConfirmation", new { email = Email, returnUrl });
-            }
-            else
-                UrlContinue = Url.Page($"~/RegisterConfirmation", new { email = Email });
+            UrlContinue = Url.Page($"/RegisterConfirmation", new { email = Email });
 
 
             return Page();

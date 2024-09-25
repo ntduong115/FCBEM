@@ -1,0 +1,42 @@
+﻿@page
+@model FCAI.Areas.Admin.Pages.Manager.CreateUserModel
+@{
+}
+
+@await Component.InvokeAsync("StatusMessage", new { message = Model.StatusMessage })
+
+<form method="post" autocomplete="off" asp-antiforgery="true">
+    <span asp-validation-for="Email"></span>
+    <div class="input-group mb-2 row">
+        <div class="col-md-5">
+            <label class="required" asp-for="Email"></label>
+        </div>
+        <div class="col-md-6" style="text-align:right">
+            <input asp-for="Email" class="form-control" autofocus="autofocus" autocomplete="off" />
+        </div>
+
+    </div>
+
+    <span asp-validation-for="Name"></span>
+    <div class="input-group mb-2 row">
+        <div class="col-md-5">
+            <label class="required" asp-for="Name"></label>
+        </div>
+        <div class="col-md-6" style="text-align:right">
+            <input asp-for="Name" class="form-control" autofocus="autofocus" autocomplete="off" />
+        </div>
+
+    </div>
+
+    <span asp-validation-for="Password"></span>
+    <div class="input-group mb-2 row">
+        <div class="col-md-5">
+            <label class="required" asp-for="Password"></label>
+        </div>
+        <div class="col-md-6" style="text-align:right">
+            <input asp-for="Password" class="form-control" autofocus="autofocus" autocomplete="off" />
+        </div>
+
+    </div>
+    <button type="submit" title="Generate" class="btn btn-secondary">Create</button>
+</form>

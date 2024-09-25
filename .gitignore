@@ -2,6 +2,14 @@ FCBEM/bin
 FCBEM/obj
 Core/bin
 Core/obj
-FCBEMModel/bin
-FCBEMModel/obj
+Model/bin
+Model/obj
 FCBEM/.vs
+/.vs
+/.config
+/FCAI/bin
+/FCAI/obj
+/FCCore/bin
+/FCCore/obj
+/FCBEMModel/bin
+/FCBEMModel/obj

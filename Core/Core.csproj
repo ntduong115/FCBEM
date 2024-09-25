@@ -7,21 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Commons\" />
-    <None Remove="Models\" />
-    <None Remove="Interfaces\" />
-    <None Remove="Commons\Extentions\" />
-    <None Remove="Models\Systems\" />
-    <None Remove="Providers\" />
-    <None Remove="Services\" />
-    <None Remove="Models\Utility\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Commons\Extentions\" />
-    <Folder Include="Models\Systems\" />
-    <Folder Include="Providers\" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="MailKit" Version="4.4.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.4" />
     <PackageReference Include="Microsoft.Extensions.Localization" Version="8.0.4" />

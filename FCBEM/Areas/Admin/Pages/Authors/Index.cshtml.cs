@@ -1,17 +1,17 @@
 using Core.Interfaces;
 
-using FCBEM24.Commons.Authorizations;
-using FCBEM24.Commons.PageModels;
-using FCBEMModel;
-using FCBEMModel.Models.Authorize;
-using FCBEMModel.PaperModels;
+using FCBEM.Commons.Authorizations;
+using FCCore.PageModels;
+using Model;
+using Model.Models.Authorize;
+using Model.PaperModels;
 using Microsoft.AspNetCore.Identity;
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using static Core.Commons.FCBEMConstants;
+using static Core.Commons.FCConstants;
 
-namespace FCBEM24.Areas.Admin.Pages.Authors
+namespace FCBEM.Areas.Admin.Pages.Authors
 {
     [AuthorizeCustomize(RoleName.Admin)]
     public class IndexModel(UserManager<User> userManager, IEmailSender emailSender, DatabaseContext context, IConfiguration configuration) : IReadPageModel<Author>(userManager, context, configuration)

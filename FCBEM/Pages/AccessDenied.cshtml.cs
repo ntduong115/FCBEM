@@ -1,4 +1,4 @@
-using FCBEM24.Commons.PageModels;
+using FCCore.PageModels;
 
 namespace FCBEM.Pages
 {
