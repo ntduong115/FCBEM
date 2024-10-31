@@ -38,6 +38,11 @@ namespace FCBEM.Areas.Client.Pages.Registrations
 
         public IActionResult OnGet()
         {
+            if (DateTime.Now > new DateTime(2024, 11, 1, 6, 0, 0))
+            {
+                StatusMessage = new StatusMessage("Expire time", false).ToJSon();
+                return RedirectToPage("./Index");
+            }
             _ = Guid.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out Guid user);
             CreateSelectList(user);
             ModelState.Clear();
@@ -120,7 +125,7 @@ namespace FCBEM.Areas.Client.Pages.Registrations
                 if (!exists)
                     Directory.CreateDirectory(Path.Combine(environment.WebRootPath, path));
                 List<string> urls = await FileManager.SaveFilesAsyncToServer(Input.FormFile, path, environment.WebRootPath);
-                Input.Files = JsonConvert.SerializeObject(urls.Select(u => Url.Content(Path.Combine(PathUpload.REGISTRAION, userId.ToString(), u))));
+                Input.Files = JsonConvert.SerializeObject(urls.Select(u => Url.Content(Path.Combine(PathUpload.REGISTRAION, userPath, u))));
             }
 
             Input.Status = RegistrationStatus.Pending;

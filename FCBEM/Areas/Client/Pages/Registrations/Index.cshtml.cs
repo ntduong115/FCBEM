@@ -36,8 +36,9 @@ namespace FCBEM.Areas.Client.Pages.Registrations
             return base.Sort(listData.OrderByDescending(o => o.CreatedDate));
         }
 
-        public async Task<IActionResult> OnGetAsync()
+        public IActionResult OnGet()
         {
+
             HasListData = true;
             return Page();
         }

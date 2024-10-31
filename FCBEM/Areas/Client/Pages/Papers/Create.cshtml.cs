@@ -40,6 +40,11 @@ namespace FCBEM.Areas.Client.Pages.Papers
 
         public async Task<IActionResult> OnGetAsync()
         {
+            if (DateTime.Now > new DateTime(2024, 10, 23, 6, 0, 0))
+            {
+                StatusMessage = new StatusMessage("Expire time",false).ToJSon();
+                return RedirectToPage("./Index");
+            }
             ModelState.Clear();
             StatusMessage = null;
             User user = await userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier) ?? string.Empty) ?? new User();
