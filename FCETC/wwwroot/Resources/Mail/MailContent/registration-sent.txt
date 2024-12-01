@@ -1,0 +1,22 @@
+﻿Dear Sir/Madam, 
+<br/><br/>
+Thank you for your support to {0}!
+<br/><br/>
+Your registration has been received by the system. 
+Once you have paid the registration fee successfully and submitted valid payment proof, 
+the conference specialist will review your registration form and send you confirmation later. 
+Please check your email later. 
+If you have any questions, please contact the conference specialist for help. 
+<br/><br/>
+Best wishes, 
+<br/>
+{0} Conference Organising Committee
+<br/><br/>
+<div style="display:flex;align-items: center; background-color:while; ">
+    <img src="cid:{1}" style="width:33%" />
+    <img src="cid:{2}" style="width:33%" />
+    <img src="cid:{3}" style="width:33%" />
+</div>
+<br/><br/>
+--------------------------------------------------- <br/>
+This is an auto message from the conference system, please do not reply.

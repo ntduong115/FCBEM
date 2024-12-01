@@ -1,0 +1,28 @@
+﻿@page "/ForgetPassword"
+@model FCETC.Pages.Authorize.ForgotPassModel
+@{
+    Layout = "_Layout_Auth";
+}
+
+@await Component.InvokeAsync("StatusMessage", new { message = Model.StatusMessage })
+
+<form method="post" asp-route-ReturnUrl="@Model.ReturnUrl">
+    <p>Please enter your email address to recover your password</p>
+    <div class="input-group mb-3">
+        <div class="input-group-append">
+            <div class="input-group-text">
+                <span class="fas fa-envelope"></span>
+            </div>
+        </div>
+        @if (!string.IsNullOrEmpty(Model.StatusMessage))
+        {
+            <input asp-for="Input.Email" type="email" class="form-control" autofocus="autofocus" autocomplete="on" disabled />
+        }
+        else
+        {
+            <input asp-for="Input.Email" type="email" class="form-control" autofocus="autofocus" autocomplete="on" />
+        }
+        <span asp-validation-for="Input.Email" class="text-danger"></span>
+    </div>
+    <input style="width: 20%" type="submit" value="Send" class="btn btn-block btn-primary" />
+</form>

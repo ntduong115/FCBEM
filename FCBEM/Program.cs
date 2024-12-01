@@ -129,12 +129,10 @@ else
 }
 app.UsePathBase($"/{name + year}");
 
-//app.UseHttpsRedirection();
+app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
-//app.UseCookiePolicy(); // chỉ cho phép gửi qua https
 
 app.UseSession();
 app.UseAuthentication();
@@ -143,11 +141,7 @@ app.UseAuthorization();
 app.UseMiddleware<AntiforgeryCookieMiddleware>();
 app.UseMiddleware<ExceptionLoggingMiddleware>();
 
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapRazorPages();
-    //endpoints.MapControllers();
-});
+app.MapRazorPages();
 
 app.Run();
 

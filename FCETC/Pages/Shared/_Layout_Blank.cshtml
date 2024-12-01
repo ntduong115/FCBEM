@@ -1,0 +1,76 @@
+﻿@{
+    var eventList = ViewBag.EventList ?? new List<int>();
+    string text = $"{Model.ProjectName.ToLower()}{Model.ProjectYear}";
+}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xml:lang="en"
+      lang="en">
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+          content="Chính thức thành lập ngày 8/9/2006 theo Quyết định của Thủ tướng Chính phủ, Trường Đại học FPT trở thành trường đại học đầu tiên của Việt Nam do một doanh nghiệp đứng ra thành lập với 100% vốn đầu tư từ Tập đoàn FPT. Sự khác biệt của Trường Đại học FPT so với các trường đại học khác là đào tạo theo hình thức liên kết chặt chẽ với các doanh nghiệp, gắn đào tạo với thực tiễn, với nghiên cứu – triển khai và các công nghệ hiện đại nhất. Triết lý và phương pháp giáo dục hiện đại; Đào tạo con người toàn diện, hài hòa; Chương trình luôn được cập nhật và tuân thủ các chuẩn công nghệ quốc tế; Đặc biệt chú trọng kỹ năng ngoại ngữ; Tăng cường đào tạo quy trình tổ chức sản xuất, kỹ năng làm việc theo nhóm và các kỹ năng cá nhân khác là những điểm sẽ đảm bảo cho sinh viên tốt nghiệp có những cơ hội việc làm tốt nhất sau khi ra trường">
+    @RenderSection("Meta", required: false)
+    <title>@ViewData["Title"] - FPT Education</title>
+
+    <script src="~/js/jquery-1.12.4.js"></script>
+    <script src="~/js/modernizr-2.6.2.js"></script>
+    <script src="https://cdn.rawgit.com/leafo/sticky-kit/v1.1.2/jquery.sticky-kit.js" async></script>
+
+    <link rel="canonical" href="https://netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+    </noscript>
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/fcle.css" rel="stylesheet" />
+    @RenderSection("styles", required: false)
+
+    <style>
+        .title {
+            font-weight: bold;
+        }
+        body{
+            overflow:hidden;
+        }
+        .container-full{
+            width: 100vw;
+            height:95vh;
+        }
+        .mt-5v{
+            margin-top:5vh !important;
+        }
+        @@media only screen and (max-width: 768px){
+            .mt-5v {
+                margin-top: 75px !important;
+            }
+    </style>
+</head>
+
+
+<body >
+
+    <partial name="_Header_NavOnly" />
+
+    <div class="container-full mt-5v">
+        @RenderBody()
+    </div>
+    @RenderSection("Body", required: false)
+
+    <div style="font-size:9px;">
+        Version: @Model.Version
+    </div>
+
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/respond.min.js"></script>
+    <script src="~/js/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/js/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/js/jquery-ui-1.12.1.min.js"></script>
+    <script src="~/js/bootstrap-dropdownhover.min.js"></script>
+    <script src="~/js/handleSearchArticle.js"></script>
+
+    <script src="~/js/layout.js"></script>
+</body>
+</html>

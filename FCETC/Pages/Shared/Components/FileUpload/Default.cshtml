@@ -1,0 +1,101 @@
+﻿@model FCCore.ViewComponents.FileUploadViewComponent.FileUploadModel
+
+
+@*<div class="form-group">
+    <label asp-for="Input.FormFile"></label>
+
+    @if (Model.IsEdit)
+    {
+        int count = Model.Urls.Count / 3 + Model.Urls.Count % 3 != 0 ? 1 : 0;
+        int j = 0;
+            <div class="row browse-file">
+                <div class="col-md-12">
+                @for (int i = 1; i <= count; i++)
+                {
+                            <div class="row">
+                        @for (; j < j + 3; j++)
+                        {
+                            if (j == Model.Urls.Count)
+                            {
+                                break;
+                            }
+                            string url = Model.Urls[j];
+                            string fileName = url.Split('\\').Last();
+                                        <div class="col-md-4" style="word-wrap: break-word;">
+                                            <a href="@(Model.Domain+url)" target="_blank"><img src="~/images/icon/document.png" /> @fileName</a>
+                                        </div>
+                        }
+                            </div>
+                }
+                </div>
+            </div>
+            <br />
+    }
+    <div class="row">
+        <input asp-for="Input.FormFile" class="browse-file" multiple accept=".docx, .doc,.pdf" required>
+    </div>
+    <div class="row note-browse-file">
+        (DOC, DOCX, PDF)
+    </div>
+    @if (Model.IsEdit)
+    {
+            <div class="note-browse-file row">
+                ***When re-selecting attachments, previously uploaded files will be lost!
+            </div>
+    }
+</div>*@
+
+<div class="col-md-12 mb-3" style="font-size: 13px;">
+    <label asp-for="Input.FormFile"></label>
+
+    @if (Model.IsEdit)
+    {
+        int count = Model.Urls.Count / 3 + Model.Urls.Count % 3 != 0 ? 1 : 0;
+        int j = 0;
+        <div class="row browse-file">
+            <div class="col-md-12">
+                @for (int i = 1; i <= count; i++)
+                {
+                    <div class="row">
+                        @for (; j < j + 3; j++)
+                        {
+                            if (j == Model.Urls.Count)
+                            {
+                                break;
+                            }
+                            string url = Model.Urls[j];
+                            string fileName = url.Split('\\').Last();
+                            <div class="col-md-4" style="word-wrap: break-word;">
+                                <a href="@(Model.Domain+url)" target="_blank"><img src="~/images/icon/document.png" /> @fileName</a>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+        <br />
+    }
+    <input asp-for="Input.FormFile" id="fileInput" class="form-control" multiple="false" accept=".docx, .doc" required>
+    <div class="row note-browse-file" style="margin-left: 10px;">
+        (DOC, DOCX)
+    </div>
+    @if (Model.IsEdit)
+    {
+        <div class="note-browse-file row">
+            ***When re-selecting attachments, previously uploaded files will be lost!
+        </div>
+    }
+</div>
+
+<script>
+    document.getElementById('fileInput').addEventListener('change', function (event) {
+        var input = event.target;
+        if (input.files.length > 1) {
+            // Hiển thị thông báo lỗi
+            alert('Only 01 (one) file can be selected for submission. Please choose 01 (one) file structured in either doc, docx, or pdf format.');
+
+            // Xóa tất cả các tệp đã chọn
+            input.value = '';
+        }
+    });
+</script>

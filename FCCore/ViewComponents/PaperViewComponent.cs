@@ -9,7 +9,6 @@ using Microsoft.Extensions.Options;
 
 
 using System.ComponentModel.DataAnnotations;
-using Core.Commons.Validations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 

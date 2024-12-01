@@ -12,7 +12,6 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
-using Core.Commons.Validations;
 
 namespace FCCore.PageModels
 {

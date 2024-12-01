@@ -1,19 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Security.Claims;
 using Core.Models.Utility;
 
 using FCCore.PageModels;
-using FCCore.ViewComponents;
 
 using Model;
 using Model.Models.Authorize;
 
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-
-using static Core.Commons.FCConstants;
 
 namespace FCBEM.Pages.Authorize
 {

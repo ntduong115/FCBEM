@@ -1,0 +1,306 @@
+﻿@page
+@model FCETC.Areas.Client.Pages.Papers.CreateModel
+@{
+    ViewData["Title"] = "Submit paper";
+}
+@await Component.InvokeAsync("StatusMessage", new { message = Model.StatusMessage })
+
+<div style="display: flex; justify-content: flex-start; flex-wrap: nowrap; margin-top: 10px; margin-bottom: 10px; width: 95%; margin-left: 10px;">
+    @if (Model.Expired.CompareTo(DateTime.Now) >= 0)
+    {
+        <p>Extended deadline for full paper submission: December 7th, 2023</p>
+    }
+    else
+    {
+        <div class="row">
+            <div class="row">
+                <div asp-validation-summary="All" class="text-danger"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">Paper Information</h4>
+                        </div>
+                        <div class="panel-body">
+                            <form method="post" enctype="multipart/form-data" id="add_form">
+                                <h5>Author Information</h5>
+                                <div class="row">
+                                    <div class="col-md-12 mb-3">
+                                        <h5 class="custom-text-3">Please fill in the form the necessary information off all authors. Tick in the circle if you are the corresponding author. Each paper will have <strong>one</strong> corresponding author only. Only corresponding author will receive notification emails from the system.</h5>
+                                        <style>
+                                            .custom-text-3 {
+                                                color: black;
+                                                background-color: #D9EDF7;
+                                                padding: 12px;
+                                            }
+                                        </style>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <input style="font-size: 12x" asp-for="Input.UserId" hidden>
+                                    @* <input style="font-size: 12x" asp-for="Input.FullName" class="form-control" readonly> *@
+                                    @* <span asp-validation-for="Input.FullName" class="text-danger"></span> *@
+                                </div>
+                                @{
+                                    int totalAuthors = 0;
+                                }
+                                <div id="show_item">
+                                    @if (Model.Input.Authors != null && Model.Input.Authors.Count > 0)
+                                    {
+                                        for (int i = 0; i < Model.Input.Authors.Count; ++i)
+                                        {
+                                            if (Model.Input.Authors.ElementAt(i).IsHidden)
+                                            {
+                                                <input hidden value="true" name="Input.Authors[@i].IsHidden" />
+                                            }
+                                            else
+                                            {
+                                                <div class="add-auth" style="margin-top: 10px;" index="@i">
+                                                    <h5>
+                                                        Author @(i + 1): @if (i == 0)
+                                                        {
+                                                            <span style="color: red;">(Please fill in at least one author information)</span>
+                                                        }
+                                                    </h5>
+                                                    <div class="row">
+                                                        <div class="col-md-3 mb-3">
+                                                            <input type="hidden" id="totalAuthors" value="@totalAuthors" />
+                                                            <input style="font-weight: normal;" type="text" name="Input.Authors[@i].FirstName" value="@Model.Input.Authors.ElementAt(i).FirstName" class="form-control" placeholder="First Name:*" required>
+                                                        </div>
+                                                        <div class="col-md-3 mb-3">
+                                                            <input style="font-weight: normal;" type="text" name="Input.Authors[@i].MiddleName" value="@Model.Input.Authors.ElementAt(i).MiddleName" class="form-control" placeholder="Middle Name:">
+                                                        </div>
+                                                        <div class="col-md-3 mb-3">
+                                                            <input style="font-weight: normal;" type="text" name="Input.Authors[@i].LastName" value="@Model.Input.Authors.ElementAt(i).LastName" class="form-control" placeholder="Last Name:*" required>
+                                                        </div>
+                                                        <div class="col-md-3 mb-3">
+                                                            <input style="font-weight: normal;" type="text" name="Input.Authors[@i].Country" value="@Model.Input.Authors.ElementAt(i).Country" class="form-control" placeholder="Country or Region:*" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" style="margin-top: 10px">
+                                                        <div class="col-md-3 mb-3">
+                                                            <input style="font-weight: normal;" type="text" name="Input.Authors[@i].Affiliation" value="@Model.Input.Authors.ElementAt(i).Affiliation" class="form-control" placeholder="Affiliation:*" required>
+                                                        </div>
+                                                        <div class="col-md-3 mb-3">
+                                                            <input style="font-weight: normal;" type="text" name="Input.Authors[@i].Email" value="@Model.Input.Authors.ElementAt(i).Email" class="form-control" placeholder="Email:*" required>
+                                                        </div>
+                                                        <div class="col-md-3 mb-3">
+                                                            <input style="font-weight: normal;" type="text" name="Input.Authors[@i].Phone" value="@Model.Input.Authors.ElementAt(i).Phone" class="form-control" placeholder="Phone:*" required>
+                                                        </div>
+                                                        <div class="col-md-3 mb-3">
+                                                            <label>
+                                                                <input type="radio" name="AuthorRole" value="@i" autocomplete="off" @(Model.Input.Authors.ElementAt(i).IsCorresponding ? "checked" : "")>  <span style="font-size: 1.2em;">Corresponding author</span>
+                                                                @* <input type="hidden" name="Authors[0].Role" value="99" /> *@
+                                                            </label>
+                                                        </div>
+                                                        @if (i > 0)
+                                                        {
+
+                                                            <div class="col-md-2 mb-3" style="margin-top: 5px;">
+                                                                <div>
+                                                                    <button class="btn btn-danger remove_auth">Remove</button>
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+
+                                        <div class="add-auth" style="margin-top: 10px">
+                                            <h5>Author 1: <span style="color: red;">(Please fill in at least one author information)</span></h5>
+                                            <div class="row">
+                                                <div class="col-md-3 mb-3">
+                                                    <input type="hidden" id="totalAuthors" value="@totalAuthors" />
+                                                    <input style="font-weight: normal;" type="text" name="Input.Authors[0].FirstName" class="form-control" placeholder="First Name:*" required>
+                                                </div>
+                                                <div class="col-md-3 mb-3">
+                                                    <input style="font-weight: normal;" type="text" name="Input.Authors[0].MiddleName" class="form-control" placeholder="Middle Name:">
+                                                </div>
+                                                <div class="col-md-3 mb-3">
+                                                    <input style="font-weight: normal;" type="text" name="Input.Authors[0].LastName" class="form-control" placeholder="Last Name:*" required>
+                                                </div>
+                                                <div class="col-md-3 mb-3">
+                                                    <input style="font-weight: normal;" type="text" name="Input.Authors[0].Country" class="form-control" placeholder="Country or Region:*" required>
+                                                </div>
+                                            </div>
+                                            <div class="row" style="margin-top: 10px">
+                                                <div class="col-md-3 mb-3">
+                                                    <input style="font-weight: normal;" type="text" name="Input.Authors[0].Affiliation" class="form-control" placeholder="Affiliation:*" required>
+                                                </div>
+                                                <div class="col-md-3 mb-3">
+                                                    <input style="font-weight: normal;" type="text" name="Input.Authors[0].Email" class="form-control" placeholder="Email:*" required>
+                                                </div>
+                                                <div class="col-md-3 mb-3">
+                                                    <input style="font-weight: normal;" type="text" name="Input.Authors[0].Phone" class="form-control" placeholder="Phone:*" required>
+                                                </div>
+                                                <div class="col-md-3 mb-3">
+                                                    <label>
+                                                        <input type="radio" name="AuthorRole" value="0" autocomplete="off" checked>  <span style="font-size: 1.2em;">Corresponding author</span>
+                                                        @* <input type="hidden" name="Authors[0].Role" value="99" /> *@
+                                                    </label>
+
+                                                    <input style="font-weight: normal;" type="hidden" name="Input.Authors[0].AuthorNum" class="form-control" value="0">
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    }
+
+                                </div>
+                                <div class="row" style="margin-top: 10px;">
+                                    <div class="col-md-2 mb-3">
+                                        <div>
+                                            <button class="btn btn-success add_auth">Click here to add more authors</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="info-paper" style="margin-top: 10px">
+                                    <div class="row">
+                                        <div class="col-md-12 mb-3">
+                                            <label style="font-size: 14px; font-weight: normal" asp-for="Input.Submission" for="Submission">Submission Type:*</label>
+                                            @if (Model.IsExpiredSubmission)
+                                            {
+                                                <select style="font-size: 14px; font-weight: normal;" asp-for="Input.Submission" asp-items="@Model.SubmissionTypes" class="form-control" disabled required></select>
+                                            }
+                                            else
+                                            {
+                                                <select style="font-size: 14px; font-weight: normal;" asp-for="Input.Submission" asp-items="@Model.SubmissionTypes" class="form-control" required></select>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-3">
+                                            <label style="font-size: 14px; font-weight: normal" asp-for="Input.ManuscriptTitle" for="ManuscriptTitle">Title:*</label>
+                                            <input style="font-size: 12x; font-weight: normal;" asp-for="Input.ManuscriptTitle" type="text" class="form-control" id="ManuscriptTitle" placeholder="Enter title" required>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-3">
+
+                                            <label style="font-size: 14px; font-weight: normal" asp-for="Input.Abstract" for="Abstract">Abstract:*</label>
+                                            <textarea style="font-size: 12x; font-weight: normal;" asp-for="Input.Abstract" class="form-control" id="Abstract" rows="5" required></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-3">
+                                            <label style="font-size: 14px; font-weight: normal" asp-for="Input.Keywords" for="ManuscriptTitle">Keywords:*</label>
+                                            <input style="font-size: 12x; font-weight: normal;" asp-for="Input.Keywords" type="text" class="form-control" id="ManuscriptTitle" required>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-3">
+                                            <h5 class="custom-text">Please upload your paper. The paper must be in Word format (file extension <strong>.doc or .docx</strong> )</h5>
+
+                                            <style>
+                                                .custom-text {
+                                                    color: #006400;
+                                                    background-color: #e0ffe0;
+                                                    padding: 10px;
+                                                }
+                                            </style>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+
+                                        @await Component.InvokeAsync("FileUpload", new { isEdit = false, urls = new List<string>() })
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-3">
+                                            <h5 class="custom-text-2">If you have completed the form, please press the ‘Submit' button below. Uploading may take a while, please <strong>do not</strong> click the button twice.</h5>
+
+                                            <style>
+                                                .custom-text-2 {
+                                                    color: #996D3B;
+                                                    background-color: #FCF8E3;
+                                                    padding: 10px;
+                                                }
+                                            </style>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-3">
+                                            <input type="hidden" id="total_authors" name="total_authors" value="1">
+                                            <button type="submit" class="btn btn-primary" style="height: 50px; font-size: 16px;">
+                                                Submit
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<script>
+    let radioCounter = @((Model.Input.Authors == null || Model.Input.Authors.Count == 0) ? "1" : Model.Input.Authors.Count.ToString());
+    $(document).ready(function () {
+        $(".add_auth").click(function (e) {
+            e.preventDefault();
+            $("#show_item").append(`
+                    <div class="add-auth append_item" style="margin-top: 10px" index="${radioCounter}">
+                    <p></p>
+                    <h5>Author ${radioCounter + 1}:</h5>
+                    <div class="row">
+                        <div class="col-md-3 mb-3">
+                            <input style="font-weight: normal;" type="text" name="Input.Authors[${radioCounter}].FirstName" class="form-control" placeholder="First Name:*" required>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <input style="font-weight: normal;" type="text" name="Input.Authors[${radioCounter}].MiddleName" class="form-control" placeholder="Middle Name:">
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <input style="font-weight: normal;" type="text" name="Input.Authors[${radioCounter}].LastName" class="form-control" placeholder="Last Name:*" required>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <input style="font-weight: normal;" type="text" name="Input.Authors[${radioCounter}].Country" class="form-control" placeholder="Country or Region:*" required>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 10px">
+                        <div class="col-md-3 mb-3">
+                            <input style="font-weight: normal;" type="text" name="Input.Authors[${radioCounter}].Affiliation" class="form-control" placeholder="Affiliation:*" required>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <input style="font-weight: normal;" type="text" name="Input.Authors[${radioCounter}].Email" class="form-control" placeholder="Email:*" required>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <input style="font-weight: normal;" type="text" name="Input.Authors[${radioCounter}].Phone" class="form-control" placeholder="Phone:*" required>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label>
+                                <input type="radio" name="AuthorRole" value="${radioCounter}" autocomplete="off">  <span style="font-size: 1.2em;">Corresponding author</span>
+                            </label>
+                                <input type="hidden" name="Input.Authors[${radioCounter}].AuthorNum" class="form-control" value="${radioCounter}">
+
+                        </div>
+                        <div class="col-md-2 mb-3" style="margin-top: 5px;">
+                            <div>
+                                <button class="btn btn-danger remove_auth">Remove</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                                                                        `);
+
+            ++radioCounter;
+        });
+        $(document).on('click', '.remove_auth', function (e) {
+            e.preventDefault();
+            if (confirm("Are you sure to delete it?")) {
+                const row_iteam = $(this).closest('.add-auth');
+                const index = $(row_iteam).attr('index');
+                $('#show_item').append(`<input hidden value="true" name="Input.Authors[${index}].IsHidden"/>`)
+                $(row_iteam).remove();
+            }
+        });
+    });
+</script>

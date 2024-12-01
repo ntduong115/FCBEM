@@ -1,0 +1,119 @@
+﻿<div id="menutop">
+<nav class="nav" id="nav-menu">
+    <div class="nav_content bd-grid">
+        @* <a href="~/" class="nav_perfil">
+        <div class="nav_img">
+        <img src="~/img/banner-blue.png" alt />
+        </div>
+        </a>
+        *@
+        <div class="nav_menu">
+            <!-- Option bar -->
+            <ul class="nav_list">
+                <li id="userinfo_mobi" class="nav_item font_header dropdown">
+                    <style>
+                        .regisloginblock {
+                            display: flex !important;
+                        }
+                    </style>
+                <li id="userinfo_mobi2" class="regisloginblock" style="font-size: 15px !important;  width: 100%">
+                        @await Component.InvokeAsync("mobiLoginViewComponent", null)
+                </li>
+
+                <li class="nav_item font_header">
+                    <a href="~/" class="nav_link active">About FCETC</a>
+                </li>
+                <li class="nav_item font_header dropdown">
+
+                    <a href="#" class="nav_link dropdown_link">
+                        Information
+                        <img src="https://cdn-icons-png.flaticon.com/512/32/32195.png" style="width:10px;margin-left:2px;" class="bx bx-chevron-down dropdown_icon" />
+                    </a>
+
+                    <ul class="dropdown_menu">
+                        <li class="dropdown_item">
+                                <a href="~/cfp" class="nav_link">Call for Papers</a>
+                        </li>
+                        <li class="dropdown_item">
+                                <a href="~/Keynote" class="nav_link">Keynote Speakers</a>
+                        </li>
+
+                        <li class="dropdown_item">
+                            <a href="~/VR360Tour" class="nav_link">Venue</a>
+                        </li>
+
+                        <li class="dropdown_item">
+                                <a href="~/ReviewBoard" class="nav_link">Review Board</a>
+                        </li>
+
+                        <li class="dropdown_item">
+                            <a href="~/Conferencefees" class="nav_link">Conference fee</a>
+                        </li>
+
+                        <li class="dropdown_item">
+                                <a href="~/BestPaperAward" class="nav_link">Best Paper Award</a>
+                        </li>
+                        <li class="dropdown_item">
+                                <a href="~/AbstractRequirements" class="nav_link">Abstract Requirements</a>
+                        </li>
+
+                        <li class="dropdown_item">
+                                <a href="~/FullPaperRequirements" class="nav_link">Full Paper Requirements</a>
+                        </li>
+                        <li class="dropdown_item">
+                                <a href="~/RecommendedAccommodation" class="nav_link">Recommended Accommodation</a>
+                        </li>
+                        <li class="dropdown_item">
+                            <a href="~/KeyDates" class="nav_link">Key Dates</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav_item font_header">
+                    <a href="~/agenda" class="nav_link">Agenda</a>
+                </li>
+                <li class="nav_item font_header">
+                    <a href="~/AbstractBooks" class="nav_link">Abstract Books</a>
+                </li>
+                <li class="nav_item font_header dropdown">
+                      <a href="~/ConferenceRegistration/PresenterSpeaker" class="nav_link dropdown_link">
+                            Conference Registration
+                        <img src="https://cdn-icons-png.flaticon.com/512/32/32195.png" style="width:10px;margin-left:2px;" class="bx bx-chevron-down dropdown_icon" />
+                    </a>
+                    <ul class="dropdown_menu">
+                        <li class="dropdown_item">
+                                <a href="~/ConferenceRegistration/ParticipantListener" class="nav_link">Participant Listener</a>
+                        </li>
+                         <li class="dropdown_item">
+                                <a href="~/ConferenceRegistration/PresenterSpeaker" class="nav_link">Presenter Speaker</a>
+                        </li>
+                    </ul>
+                </li>
+                
+                <li class="nav_item font_header">
+                    <a href="~/SponsorshipOptions" class="nav_link">Sponsorship Options</a>
+                </li>
+                <li class="nav_item font_header">
+                    <a href="~/News" class="nav_link">News</a>
+                </li>
+                <li class="nav_item font_header">
+                    <a href="~/gallery" class="nav_link">Gallery</a>
+                </li>
+                <li class="nav_item font_header">
+                    <a href="~/Testimonials" class="nav_link">Testimonials</a>
+                </li>
+                <li class="nav_item font_header">
+                    <a href="~/contact" class="nav_link">Contact Us</a>
+                </li>
+
+            </ul>
+
+                <div id="userinfo" class="userinfo nav_menu d-flex align-items-center">
+                <div class="userinfo-content ">
+                    @await Component.InvokeAsync("LoginViewComponent", null)
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+</div>

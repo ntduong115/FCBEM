@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Identity;
 using FCCore.PageModels;
 using Model;
 using Model.Models.Authorize;
-using FCCore.ViewComponents;
 
 namespace FCBEM.Pages.Authorize
 {

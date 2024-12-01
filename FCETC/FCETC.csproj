@@ -1,0 +1,78 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<AssemblyVersion>1.0.*</AssemblyVersion>
+		<GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+		<Deterministic>false</Deterministic>
+	</PropertyGroup>
+
+	<PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
+	<PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
+	<ItemGroup>
+	  <Compile Remove="Areas\Admin\Pages\Abstracts\**" />
+	  <Compile Remove="Areas\Admin\Pages\FullPapers\**" />
+	  <Content Remove="Areas\Admin\Pages\Abstracts\**" />
+	  <Content Remove="Areas\Admin\Pages\FullPapers\**" />
+	  <EmbeddedResource Remove="Areas\Admin\Pages\Abstracts\**" />
+	  <EmbeddedResource Remove="Areas\Admin\Pages\FullPapers\**" />
+	  <None Remove="Areas\Admin\Pages\Abstracts\**" />
+	  <None Remove="Areas\Admin\Pages\FullPapers\**" />
+	</ItemGroup>
+	
+	<ItemGroup>
+		<PackageReference Include="EfCore.SchemaCompare" Version="8.0.4" />
+		<PackageReference Include="MailKit" Version="4.4.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="8.0.4" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.4" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="8.0.4" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<PackageReference Include="EPPlus" Version="7.1.1" />
+		<PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.4" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.4" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.4">
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.4" />
+	</ItemGroup>
+	<ItemGroup>
+		<Content Remove="wwwroot\docs\" />
+		<Content Remove="wwwroot\fonts\" />
+		<Content Remove="wwwroot\img\" />
+		<Content Remove="wwwroot\css\" />
+		<Content Remove="wwwroot\js\" />
+	</ItemGroup>
+	<ItemGroup>
+		<_ContentIncludedByDefault Remove="wwwroot\css\fcle.css" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Core\Core.csproj" />
+		<ProjectReference Include="..\FCCore\FCCore.csproj" />
+		<ProjectReference Include="..\Model\Model.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Reference Include="MasterCore">
+	    <HintPath>..\Libs\MasterCore.dll</HintPath>
+	  </Reference>
+	</ItemGroup>
+	<ItemGroup>
+		<Content Update="wwwroot\css\bootstrap.min.css">
+		  <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		  <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+		</Content>
+		<Content Update="wwwroot\css\site.css">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+		</Content>
+	</ItemGroup>
+	<ItemGroup>
+	  <EditorConfigFiles Remove="C:\Users\tvthuanit\source\repos\FCBEM\FCETC\.editorconfig" />
+	</ItemGroup>
+	<ItemGroup>
+	  <None Include="C:\Users\tvthuanit\source\repos\FCBEM\FCETC\.editorconfig" />
+	</ItemGroup>
+</Project>

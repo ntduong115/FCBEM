@@ -1,0 +1,110 @@
+﻿@using System.Security.Claims;
+
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+@{
+    string name = " ";
+    string nameIdentifier = User.FindFirstValue(ClaimTypes.NameIdentifier);
+    if (nameIdentifier != null)
+    {
+        User user = await UserManager.FindByIdAsync(nameIdentifier) ?? new User();
+        if (user.Name != string.Empty)
+        {
+            name = user.Name;
+        }
+    }
+
+
+}
+<style>
+
+    .regisloginblock {
+        display: flex !important;
+    }
+
+</style>
+
+
+
+
+
+@if (SignInManager.IsSignedIn(User))
+{
+
+
+    @if (User.IsInRole(Core.Commons.FCConstants.RoleName.Admin))
+    {
+
+
+        <a href="#" class="nav_link dropdown_link">
+            Hello Admin
+            <img src="https://cdn-icons-png.flaticon.com/512/32/32195.png" style="width:10px;margin-left:2px;" class="bx bx-chevron-down dropdown_icon" />
+        </a>
+
+    }
+    else
+    {
+
+        <a href="#" class="nav_link dropdown_link">
+            Hello  @name
+            <img src="https://cdn-icons-png.flaticon.com/512/32/32195.png" style="width:10px;margin-left:2px;" class="bx bx-chevron-down dropdown_icon" />
+        </a>
+
+    }
+
+    <ul class="dropdown_menu">
+
+        @if (User.IsInRole(Core.Commons.FCConstants.RoleName.Admin))
+        {
+            <li class="dropdown_item">
+                <a class=" nav-link" asp-area="Admin" asp-page="/News/Index">News Manager</a>
+            </li>
+            <li class="dropdown_item">
+                <a class="nav-link" asp-area="Admin" asp-page="/Abstracts/Index">Abstract Paper Manager </a>
+            </li>
+            <li class="dropdown_item">
+                <a class="nav-link" asp-area="Admin" asp-page="/FullPapers/Index">Full Paper Manager </a>
+            </li>
+        }
+        @if (User.IsInRole(Core.Commons.FCConstants.RoleName.Client))
+        {
+
+            <li class="dropdown_item">
+                @*<a class="dropdown-item nav-link btn btn-link text-dark" id="resume" asp-area="ClientFCAI" asp-page="ClientFCAI/NEWS/create">Submit an article</a>*@
+                <a class="nav-link" asp-area="Client" asp-page="/Papers/Create">Submit Paper</a>
+            </li>
+            <li class="dropdown_item">
+
+                <a class="nav-link" asp-area="Client" asp-page="/Papers/Index">View Submission</a>
+            </li>
+        }
+
+
+        <li>
+            <a onclick="document.getElementById('logoutForm').submit()" class="nav-link" href="#">Log out</a>
+        </li>
+
+
+    </ul>
+
+
+
+
+    <form style="display:none" id="logoutForm" class="dropdown-item" asp-area="" asp-page="/Authorize/Logout" asp-route-returnUrl="@Url.Page("~/", new { area = "" })">
+    </form>
+}
+else
+{
+
+
+
+    <li id="userinfo_mobi2" class="regisloginblock" style="font-size: 15px !important;  width: 100%">
+        <a style="margin: 5px; id="register" asp-area="" asp-page="/Authorize/Register">Register</a>
+        <a style="margin: 5px" id="login" asp-area="" asp-page="/Authorize/Login">Login</a>
+    </li>
+
+
+}
+
+
+

@@ -1,0 +1,36 @@
+﻿@page
+@model FCETC.Pages.Authorize.LoginModel
+@{
+    ViewData["Title"] = "Login";
+    Layout = "_Layout_Auth";
+}
+
+@await Component.InvokeAsync("StatusMessage", new { message = Model.StatusMessage })
+<form method="post" asp-antiforgery="true">
+    <div class="input-group mb-3">
+        <div class="input-group-append">
+            <div class="input-group-text">
+                <span class="fas fa-envelope"></span>
+            </div>
+        </div>
+        <input asp-for="Input.Email" class="form-control" autofocus="autofocus" autocomplete="off" required />
+    </div>
+
+    <div class="input-group mb-3">
+        <div class="input-group-append">
+            <div class="input-group-text">
+                <span class="fas fa-lock"></span>
+            </div>
+        </div>
+        <input asp-for="Input.Password" class="form-control" autofocus="autofocus" autocomplete="off" required />
+    </div>
+
+    <div class="input-group mb-3">
+        <button style="width: 20%" type="submit" class="btn btn-block btn-primary">Login</button>
+        <a style="margin-left:20px" asp-page="./ForgotPass">Forget Password</a>
+    </div>
+
+    <div class="input-group mb-3">
+        <a asp-page="./Register">Please sign in without an account</a>
+    </div>
+</form>

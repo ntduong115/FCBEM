@@ -1,0 +1,21 @@
+﻿Dear Sir/Madam,
+<br/><br/>
+Paper ID: {4}
+<br/>
+Paper Title: {5}
+<br/><br/>
+Your Full paper's status has now changed to “ACCEPT”. 
+The formal acceptance letter will be sent by the conference official email, please pay attention.
+<br/><br/>
+Best wishes,
+<br/>
+{0} Conference Organising Committee
+<br/><br/>
+<div style="display:flex;align-items: center; background-color:while; ">
+    <img src="cid:{1}" style="width:33%" />
+    <img src="cid:{2}" style="width:33%" />
+    <img src="cid:{3}" style="width:33%" />
+</div>
+<br/><br/>
+--------------------------------------------------- <br/>
+This is an auto message from the conference system, please do not reply.

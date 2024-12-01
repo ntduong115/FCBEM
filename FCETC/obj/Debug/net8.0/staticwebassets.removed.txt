@@ -1,0 +1,6 @@
+E:\Works\FCBEM\FCETC\wwwroot\images\fcetc\banner\fcetc_feature.png
+E:\Works\FCBEM\FCETC\wwwroot\images\fcetc\banner\home_fcetc_m.jpg
+E:\Works\FCBEM\FCETC\wwwroot\images\fcetc\banner\home_fcetc_pc.jpg
+E:\Works\FCBEM\FCETC\wwwroot\images\icon-Calendar.png
+E:\Works\FCBEM\FCETC\wwwroot\Resources\Uploads\NEWS\CodeFile.cs
+E:\Works\FCBEM\FCETC\wwwroot\Resources\Uploads\NEWS_Thumb\CodeFile.cs

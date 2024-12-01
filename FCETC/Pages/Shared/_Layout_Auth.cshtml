@@ -1,0 +1,142 @@
+﻿
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewData["Title"] - @Model.ProjectName</title>
+    <link href="~/css/adminlte.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+    <link href="~/css/base/all.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <style type="text/css">
+        * {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        .form-horizontal {
+            padding: 5px 20px;
+        }
+
+        body {
+            background: url(../images/bg.jpg) no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+
+        .login-form {
+            font: 16px/2em;
+            margin: 100px auto;
+            max-width: 400px;
+        }
+
+        form {
+            color: #5d5d5d;
+            background: #f2f2f2;
+            padding: 26px;
+            border-radius: 10px;
+            -moz-border-radius: 10px;
+            -webkit-border-radius: 10px;
+        }
+
+            form[role=login] img {
+                display: block;
+                margin: 0 auto;
+                margin-bottom: 35px;
+            }
+
+            form[role=login] input,
+            form[role=login] select,
+            form[role=login] button {
+                font-size: 18px;
+                margin: 16px 0;
+            }
+
+            form[role=login] > div {
+                text-align: center;
+            }
+
+        .form-links {
+            text-align: center;
+            margin-top: 1em;
+            margin-bottom: 50px;
+        }
+
+            .form-links a {
+                color: #fff;
+            }
+
+        .card {
+            margin: 0rem;
+            background: none;
+        }
+
+        .login-logo {
+            margin: 10px 0px 0px;
+            text-align: center
+        }
+
+        .login-box {
+            background-color: rgb(255 255 255 / 0.5);
+            width: 800px;
+            margin: 0px auto;
+        }
+
+        .login-card-body {
+            background: none !important
+        }
+
+        p.login-box-msg {
+            font-weight: bold;
+        }
+
+        .social-auth-links {
+            margin: 10px 30px;
+        }
+
+
+
+        .login-card-body .input-group .input-group-text, .register-card-body .input-group .input-group-text {
+            background-color: #f37022;
+            color: #fff;
+        }
+
+        .field-validation-error {
+            color: red;
+            margin: 0px;
+            padding: 0px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container body-content">
+        <div class="login-box">
+
+            <div class="card">
+                <div class="login-logo"><img style="width: 250px;" src="~/images/assets/2017-FE-01-Min.png" alt="GLPI" title="GLPI"></div>
+                <div class="card-body login-card-body">
+
+
+                    <div class="form-horizontal">
+                        <h4><center>Welcome to FPT</center></h4>
+                        <h4><center>- FCETC -</center></h4>
+                        <hr />
+                        @RenderBody()
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    @section Scripts{
+        @{ await Html.RenderPartialAsync("_ValidationScriptsPartial.cshtml");}
+    }
+</body>
+</html>

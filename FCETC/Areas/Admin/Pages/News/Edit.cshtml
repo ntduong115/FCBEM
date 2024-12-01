@@ -1,0 +1,129 @@
+﻿@page "/Admin/News/Edit"
+
+@model FCETC.Areas.Admin.Pages.News.EditModel
+@{
+    ViewData["Title"] = "News_Edit";
+}
+
+@await Component.InvokeAsync("StatusMessage", new { message = Model.StatusMessage })
+
+<form method="post" enctype="multipart/form-data">
+    <h4>Bài viết</h4>
+
+
+
+    <h2>Chỉnh Sửa Tin Tức</h2>
+
+
+    <div class="form-horizontal">
+        <hr />
+
+        <div class="row">
+            <div class="col-md-8">
+                @await Component.InvokeAsync("PaperViewComponent", new { paper = Model.Input, fileUpload = Model.FileUpload })
+            </div>
+
+            <div class="col-md-4">
+                @await Component.InvokeAsync("PaperAdjust", new { paper = Model.Input, isEdit = true })
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!--MỤC THEO DÒNG SỰ KIỆN VÀ CÁC BÀI VIẾT CÓ LIÊN QUAN-->
+    @*  <div class="panel panel-default">
+        <div class="panel-heading">
+        <h3 class="panel-title">
+        <strong>Tin sự kiện</strong>
+        </h3>
+        </div>
+        <div class="panel-body">
+        <div class="row">
+        <div class="col-md-4">
+        <div class="form-group">
+        </div>
+        </div>
+        <div class="col-md-8">
+        <div class="form-group">
+        <div class="input-group">
+        <input class="form-control text-box single-line" type="text" id="articleEventTitle" placeholder="Nhập để chọn bài viết" />
+        <span onclick="performSearchEventArticle()" class="input-group-addon" style="cursor:pointer;">
+        <i id="performSearchEventArticle" class="fa fa-search"></i>
+        </span>
+        </div>
+        </div>
+        Lưu ID của article đã chọn
+        <input id="ParentArticleId" name="ParentArticleId" hidden value="-1" />
+        </div>
+        </div>
+        </div>
+        </div>
+
+        <div class="panel panel-default">
+        <div class="panel-heading">
+        <h3 class="panel-title">
+        <strong>Tin liên quan</strong>
+        </h3>
+        </div>
+        <div class="panel-body">
+        <div class="row">
+        <div class="col-md-4">
+        <div class="form-group">
+        </div>
+        </div>
+        <div class="col-md-8">
+
+        <div class="form-group">
+        <div class="input-group">
+        <input class="form-control text-box single-line" type="text" id="articleRelatedTitle" placeholder="Nhập để chọn bài viết" />
+        <span onclick="performSearchRelatedArticle()" class="input-group-addon" style="cursor:pointer;">
+        <i class="fa fa-search"></i>
+        </span>
+        </div>
+        </div>
+        </div>
+        </div>
+
+        <div class="row">
+        <div class="col-md-12">
+        <div class="list-group" id="relatedArticleSelectedList">
+
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>*@
+
+    <div>
+        <a asp-area="Admin" asp-page="/Articles/Index">Quay về Trang Quản lý</a>
+    </div>
+
+    <script src="~/js/ckeditor/ckeditor.js"></script>
+    <script src="~/js/jquery.validate.js"></script>
+    @*<script src="~/js/handleRelatedArticles.js"></script>*@
+    <script src="~/js/edit-article.js"></script>
+
+
+    <link href="~/css/awesome-bootstrap-checkbox.css" rel="stylesheet" />
+    <style type="text/css">
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .body-content {
+            flex: 1 0 auto;
+        }
+    </style>
+    @*<script src="~/js/ckeditor/ckeditor.js"></script>*@
+    <script src="~/js/ckeditor/adapters/jquery.js"></script>
+    <script src="~/js/multiselect-dropdown.js"></script>
+
+</form>

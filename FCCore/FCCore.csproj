@@ -7,6 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="ViewHandlers\Areas\Admin\Pages\Abstracts\**" />
+    <Compile Remove="ViewHandlers\Areas\Admin\Pages\FullPapers\**" />
+    <EmbeddedResource Remove="ViewHandlers\Areas\Admin\Pages\Abstracts\**" />
+    <EmbeddedResource Remove="ViewHandlers\Areas\Admin\Pages\FullPapers\**" />
+    <None Remove="ViewHandlers\Areas\Admin\Pages\Abstracts\**" />
+    <None Remove="ViewHandlers\Areas\Admin\Pages\FullPapers\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj" />
     <ProjectReference Include="..\Model\Model.csproj" />
   </ItemGroup>
